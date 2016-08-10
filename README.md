@@ -6,6 +6,6 @@
 
 
 ##Purpose
-Currently in the process of learning iOS app development using Apples Programming language swift. In the process of learning differnt material I will use this repo to upload the source code of different iOS mobile applications. I will be using different tools such as Google Firebase and Alamofire.
+Currently in the process of learning iOS app development using Apples Programming language swift. In the process of learning different material and concepts. I will use this repo to upload the source code of different iOS mobile applications developed from my learning. Tools such as Google Firebase and Alamofire will be used for complexity.
 
 Feel free to contact me if you have questions: awashington251@gmail.com | fork the code | pull the code idc :smile:
