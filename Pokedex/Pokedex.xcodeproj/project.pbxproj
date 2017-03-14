@@ -12,6 +12,7 @@
 		7DD731F21E725CCB00042063 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7DD731F01E725CCB00042063 /* LaunchScreen.storyboard */; };
 		7DD731FD1E7265FB00042063 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD731FC1E7265FB00042063 /* MainViewController.swift */; };
 		7DF475E01E730D0A006BF614 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF475DF1E730D0A006BF614 /* Pokemon.swift */; };
+		7DF475E21E767764006BF614 /* PokemonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF475E11E767764006BF614 /* PokemonCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		7DD731F31E725CCB00042063 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7DD731FC1E7265FB00042063 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		7DF475DF1E730D0A006BF614 /* Pokemon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
+		7DF475E11E767764006BF614 /* PokemonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokemonCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 		7DD731F91E7265BD00042063 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7DF475E11E767764006BF614 /* PokemonCollectionViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -162,6 +165,7 @@
 			files = (
 				7DD731E81E725CCB00042063 /* AppDelegate.swift in Sources */,
 				7DD731FD1E7265FB00042063 /* MainViewController.swift in Sources */,
+				7DF475E21E767764006BF614 /* PokemonCollectionViewCell.swift in Sources */,
 				7DF475E01E730D0A006BF614 /* Pokemon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
