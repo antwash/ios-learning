@@ -10,7 +10,7 @@ import UIKit
 
 class PokeCell: UICollectionViewCell {
     
-    private var pokemon: Pokemon!
+    fileprivate var pokemon: Pokemon!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var thumbImage: UIImageView!
     
@@ -23,7 +23,7 @@ class PokeCell: UICollectionViewCell {
     
     
     // Update pokemon cell
-    func configureCell(pokemon: Pokemon){
+    func configureCell(_ pokemon: Pokemon){
         self.pokemon = pokemon
         self.nameLabel.text = self.pokemon.getPokeName().capitalized
         self.thumbImage.image = UIImage(named: "\(self.pokemon.getPokeId())")
