@@ -1,46 +1,58 @@
-//
-//  MainViewController.swift
-//  Pokedex
-//
-//  Created by Anthony Washington on 3/9/17.
-//  Copyright © 2017 Anthony Washington. All rights reserved.
+// Created by Anthony Washington on 3/9/17.
+// Copyright © 2017 Anthony Washington. All rights reserved.
 //
 
 import UIKit
 
-class MainViewController:  UICollectionViewController, UICollectionViewDelegateFlowLayout{
+class MainViewController: UIViewController,
+                          UICollectionViewDelegate,
+                          UICollectionViewDataSource,
+                          UICollectionViewDelegateFlowLayout
+{
 
-    let cellId = "pokeCell"
-    var searchBar: UISearchBar!
+    @IBOutlet weak var collection: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let background = UIImageView(image: UIImage(named: "bg"))
-            background.contentMode = .scaleAspectFill
+        self.collection.delegate = self
+        self.collection.dataSource = self
+    }
+
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        searchBar = UISearchBar()
-        searchBar.sizeToFit()
-        searchBar.placeholder = "Search for Pokemon"
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "pokeCell", for: indexPath) as? PokeCell {
         
-        navigationItem.titleView = searchBar
-        collectionView?.alwaysBounceVertical = true
-        collectionView?.backgroundView = background
-        collectionView?.register(PokemonCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+            let pokemon = Pokemon(id: indexPath.row, name: "Pokemon")
+            
+            // adjust cell for allocated pokemon.
+            cell.configureCell(pokemon: pokemon)
+            
+            return cell
+        }
+        
+        return UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 30
+    }
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
     }
     
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-    }
-    
-    // sets the width and height of cells
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 105, height: 105)
     }
 
+
+
 }
+

@@ -15,25 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.makeKeyAndVisible()
-        
-        /*
-         1. Intialize controller type + layout flow
-         2. Intialize root controller type
-         3. Assign to main window
-         */
-        
-        let flow = MainViewController(collectionViewLayout: UICollectionViewFlowLayout())
-        let root = UINavigationController(rootViewController: flow)
-            root.navigationBar.barTintColor = UIColor(colorLiteralRed: 255/255, green: 88/255, blue: 85/255, alpha: 1)
-            root.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
-        
-        application.statusBarStyle = .lightContent
-        window?.rootViewController = root
-        
         return true
     }
 

@@ -1,10 +1,13 @@
-//
-//  Pokemon.swift
-//  Pokedex
-//
 //  Created by Anthony Washington on 3/10/17.
 //  Copyright © 2017 Anthony Washington. All rights reserved.
-//
+
+/*
+ Pokemon Model class.
+ @attributes :
+ - id : Pokemon unique identifer.
+ - name : Pokemon name.
+ 
+ */
 
 import Foundation
 
@@ -18,8 +21,7 @@ class Pokemon {
         self.name = name
     }
     
-    func getId() -> Int { return id }
-    func getName() -> String { return name }
+    func getPokeId() -> Int { return id }
+    func getPokeName() -> String { return name }
     
-
 }
