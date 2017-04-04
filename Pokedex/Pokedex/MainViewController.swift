@@ -3,6 +3,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class MainViewController: UIViewController,
                           UICollectionViewDelegate,
@@ -11,6 +12,7 @@ class MainViewController: UIViewController,
 {
     
     private var pokemonList = [Pokemon]()
+    private var musicPlayer: AVAudioPlayer!
     
     @IBOutlet weak var collection: UICollectionView!
     
@@ -20,8 +22,20 @@ class MainViewController: UIViewController,
         self.collection.delegate = self
         self.collection.dataSource = self
         self.parsePokemonCSV()
+        self.init_audio()
     }
     
+    
+    func init_audio() {
+        let path = Bundle.main.path(forResource: "music", ofType: ".mp3")!
+        
+        do {
+            musicPlayer = try AVAudioPlayer(contentsOf: URL(string: path)!)
+            musicPlayer.prepareToPlay()
+            musicPlayer.numberOfLoops = -1
+            musicPlayer.play()
+        } catch let err as NSError { print(err) }
+    }
 
     // configure collection view cell.
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -69,11 +83,23 @@ class MainViewController: UIViewController,
         
                 self.pokemonList.append(Pokemon(id: id!, name: name))
             }
-        } catch let err as NSError {
-            print(err.debugDescription)
-        }
+        } catch let err as NSError { print(err.debugDescription) }
     }
 
+    // play/pause pokemon music
+    @IBAction func musicButton(_ sender: UIButton) {
+        if musicPlayer.isPlaying {
+            // pause music and make button transparent
+            musicPlayer.pause()
+            sender.alpha = 0.2
+        }
+        else {
+            musicPlayer.play()
+            sender.alpha = 1.0
+        }
+    }
+    
+    
 
 }
 

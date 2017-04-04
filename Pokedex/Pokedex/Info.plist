@@ -30,9 +30,9 @@
 	</array>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDefault</string>
-	<key>UISupportedInterfaceOrientations</key>
+	<key>UIAppFonts</key>
 	<array>
-		<string>UIInterfaceOrientationPortrait</string>
+		<string>PokemonSolid.ttf</string>
 	</array>
 </dict>
 </plist>
