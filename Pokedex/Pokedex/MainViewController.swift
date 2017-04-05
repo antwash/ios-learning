@@ -8,19 +8,28 @@ import AVFoundation
 class MainViewController: UIViewController,
                           UICollectionViewDelegate,
                           UICollectionViewDataSource,
-                          UICollectionViewDelegateFlowLayout
+                          UICollectionViewDelegateFlowLayout,
+                          UISearchBarDelegate
 {
     
+    private var searchMode = false
+    private var filterList = [Pokemon]()
     private var pokemonList = [Pokemon]()
     private var musicPlayer: AVAudioPlayer!
     
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collection: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.searchBar.delegate = self
         self.collection.delegate = self
         self.collection.dataSource = self
+        self.searchBar.returnKeyType = UIReturnKeyType.done
+        self.searchBar.showsCancelButton = true
+        
+        
         self.parsePokemonCSV()
         self.init_audio()
     }
@@ -41,7 +50,10 @@ class MainViewController: UIViewController,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "pokeCell", for: indexPath) as? PokeCell {
         
-            let pokemon = pokemonList[indexPath.row]
+            let pokemon: Pokemon!
+            
+            if searchMode { pokemon = filterList[indexPath.row] }
+            else { pokemon = pokemonList[indexPath.row] }
             
             // adjust cell for allocated pokemon.
             cell.configureCell(pokemon)
@@ -57,6 +69,8 @@ class MainViewController: UIViewController,
     
     // return number of items in collection view
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        if searchMode { return filterList.count }
         return pokemonList.count
     }
 
@@ -100,6 +114,31 @@ class MainViewController: UIViewController,
     }
     
     
-
+    // dismiss keyboard after search pressed
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
+    }
+    
+    // dismiss keyboard after cancel pressed
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
+    }
+    
+    // method for search through list
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    
+        if searchBar.text == nil || searchBar.text == "" {
+            self.searchMode = false
+            // dismiss keyboard
+            view.endEditing(true)
+        }
+        else {
+            self.searchMode = true
+            let text = searchBar.text!.lowercased()
+            // filter list for items that contain search text.
+            filterList = pokemonList.filter({$0.getPokeName().range(of: text) != nil })
+        }
+        collection.reloadData()
+    }
 }
 
