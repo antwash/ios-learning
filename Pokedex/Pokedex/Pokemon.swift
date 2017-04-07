@@ -13,8 +13,16 @@ import Foundation
 
 class Pokemon {
 
-    fileprivate var id: Int!
-    fileprivate var name: String!
+    private var id: Int!
+    private var name: String!
+    private var description: String!
+    private var type: String!
+    private var defense: String!
+    private var height: String!
+    private var weight: String!
+    private var attack: String!
+    private var nextEvolve: String!
+    
     
     init(id: Int, name: String) {
         self.id = id

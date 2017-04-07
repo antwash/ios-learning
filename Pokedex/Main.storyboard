@@ -172,6 +172,9 @@
                                             <constraint firstAttribute="width" constant="35" id="oxc-8w-EnN"/>
                                         </constraints>
                                         <state key="normal" image="back"/>
+                                        <connections>
+                                            <action selector="backPressed:" destination="cCA-2d-ZnQ" eventType="touchUpInside" id="ccF-zf-d1m"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ivysaur" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kiw-cG-U33">
                                         <rect key="frame" x="60" y="27" width="200" height="30"/>
@@ -423,7 +426,18 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="attackLabel" destination="2WT-g6-uVo" id="YHa-lQ-Zak"/>
+                        <outlet property="currentEvolveImage" destination="jfX-tL-eH8" id="DCH-o9-gAL"/>
+                        <outlet property="defenseLabel" destination="PXZ-ma-FhQ" id="JbR-yo-F7H"/>
+                        <outlet property="descriptionLabel" destination="bJt-EO-nU2" id="ZnM-qk-XVn"/>
+                        <outlet property="evolveLabel" destination="cVB-YN-i9L" id="bUp-JJ-ycc"/>
+                        <outlet property="heightLabel" destination="K90-62-ZZq" id="7nK-Yf-a3I"/>
+                        <outlet property="idLabel" destination="ylw-fT-q3J" id="kza-RA-Nd4"/>
+                        <outlet property="mainImage" destination="SN8-Wu-VQP" id="TUG-Gj-Voj"/>
                         <outlet property="nameLabel" destination="Kiw-cG-U33" id="sIO-oa-tEA"/>
+                        <outlet property="nextEvolveImage" destination="jfz-eh-aVU" id="DYI-cO-MrW"/>
+                        <outlet property="typeLabel" destination="8QO-zp-DX9" id="5YB-2e-p1s"/>
+                        <outlet property="weightLabel" destination="A26-mm-bZV" id="ZG0-y2-0xU"/>
                     </connections>
                 </viewController>
             </objects>
