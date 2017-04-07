@@ -20,6 +20,7 @@
 		7DDFBE921E9464F100C93785 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DDFBE911E9464F100C93785 /* back.png */; };
 		7DDFBE941E94655100C93785 /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7DDFBE931E94655100C93785 /* music.mp3 */; };
 		7DF475E01E730D0A006BF614 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF475DF1E730D0A006BF614 /* Pokemon.swift */; };
+		7DFE91AB1E94A804005B8F9D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE91AA1E94A804005B8F9D /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		7DDFBE911E9464F100C93785 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		7DDFBE931E94655100C93785 /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
 		7DF475DF1E730D0A006BF614 /* Pokemon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
+		7DFE91AA1E94A804005B8F9D /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				7DD731FC1E7265FB00042063 /* MainViewController.swift */,
+				7DFE91AA1E94A804005B8F9D /* DetailViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -202,6 +205,7 @@
 				7D68DF381E935E87008BE729 /* PokeCell.swift in Sources */,
 				7DD731E81E725CCB00042063 /* AppDelegate.swift in Sources */,
 				7DD731FD1E7265FB00042063 /* MainViewController.swift in Sources */,
+				7DFE91AB1E94A804005B8F9D /* DetailViewController.swift in Sources */,
 				7DF475E01E730D0A006BF614 /* Pokemon.swift in Sources */,
 				7D68DF3C1E936FBE008BE729 /* csv.swift in Sources */,
 			);

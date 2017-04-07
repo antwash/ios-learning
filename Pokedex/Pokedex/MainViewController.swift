@@ -64,7 +64,13 @@ class MainViewController: UIViewController,
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        var pokemon: Pokemon!
         
+        if searchMode { pokemon = filterList[indexPath.row] }
+        else{ pokemon = pokemonList[indexPath.row] }
+        
+        
+        performSegue(withIdentifier: "pokemonDetail", sender: pokemon)
     }
     
     // return number of items in collection view
@@ -140,5 +146,18 @@ class MainViewController: UIViewController,
         }
         collection.reloadData()
     }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "pokemonDetail" {
+            if let destination = segue.destination as? DetailViewController {
+                if let pokemon = sender as? Pokemon {
+                    destination.setPokemon(pokemon: pokemon)
+                }
+            }
+        }
+    }
+    
+    
 }
 
