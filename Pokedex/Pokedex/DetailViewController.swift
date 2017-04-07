@@ -25,12 +25,30 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        nameLabel.text = pokemon.getPokeName().capitalized
+        idLabel.text = "\(pokemon.getId())"
+        nameLabel.text = pokemon.getName().capitalized
+        mainImage.image = UIImage(named: "\(pokemon.getId())")
+        currentEvolveImage.image = UIImage(named: "\(pokemon.getId())")
+        
+        pokemon.getPokemonDetails {
+            // action performed after HTTP request if finish
+            self.updateUserInterface()
+        }
     }
     
+
     func setPokemon(pokemon: Pokemon){
         self.pokemon = pokemon
     }
+    
+    func updateUserInterface() {
+        typeLabel.text = pokemon.getType()
+        attackLabel.text = pokemon.getAttack()
+        heightLabel.text = pokemon.getHeight()
+        weightLabel.text = pokemon.getWeight()
+        defenseLabel.text = pokemon.getDefense()
+    }
+    
 
     @IBAction func backPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)

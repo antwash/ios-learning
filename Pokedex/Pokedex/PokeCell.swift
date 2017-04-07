@@ -25,7 +25,7 @@ class PokeCell: UICollectionViewCell {
     // Update pokemon cell
     func configureCell(_ pokemon: Pokemon){
         self.pokemon = pokemon
-        self.nameLabel.text = self.pokemon.getPokeName().capitalized
-        self.thumbImage.image = UIImage(named: "\(self.pokemon.getPokeId())")
+        self.nameLabel.text = self.pokemon.getName().capitalized
+        self.thumbImage.image = UIImage(named: "\(self.pokemon.getId())")
     }
 }

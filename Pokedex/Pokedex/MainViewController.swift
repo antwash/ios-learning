@@ -142,7 +142,7 @@ class MainViewController: UIViewController,
             self.searchMode = true
             let text = searchBar.text!.lowercased()
             // filter list for items that contain search text.
-            filterList = pokemonList.filter({$0.getPokeName().range(of: text) != nil })
+            filterList = pokemonList.filter({$0.getName().range(of: text) != nil })
         }
         collection.reloadData()
     }
