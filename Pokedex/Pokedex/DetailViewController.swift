@@ -47,6 +47,20 @@ class DetailViewController: UIViewController {
         heightLabel.text = pokemon.getHeight()
         weightLabel.text = pokemon.getWeight()
         defenseLabel.text = pokemon.getDefense()
+        descriptionLabel.text = pokemon.getDesc()
+        
+    
+        if pokemon.getNextEvolveID() == "" {
+            evolveLabel.text = "No Evolutions."
+            nextEvolveImage.isHidden = true
+        }
+        else {
+            nextEvolveImage.isHidden = false
+            nextEvolveImage.image = UIImage(named: "\(pokemon.getNextEvolveID())")
+            evolveLabel.text = " Next Evolution: \(pokemon.getNextEvolveName()) - LVL: \(pokemon.getNextEvolveLevel())"
+        }
+        
+        
     }
     
 
