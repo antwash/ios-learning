@@ -19,6 +19,7 @@
 		7DB3983A1EA99793003A4768 /* GFGeoHash.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DB398331EA99793003A4768 /* GFGeoHash.m */; };
 		7DB3983B1EA99793003A4768 /* GFGeoHashQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DB398351EA99793003A4768 /* GFGeoHashQuery.m */; };
 		7DB3983C1EA99793003A4768 /* GFQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DB398371EA99793003A4768 /* GFQuery.m */; };
+		7DC70B771EA9DD45005C374D /* PokemonAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC70B761EA9DD45005C374D /* PokemonAnnotation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		7DB398361EA99793003A4768 /* GFQuery+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GFQuery+Private.h"; sourceTree = "<group>"; };
 		7DB398371EA99793003A4768 /* GFQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFQuery.m; sourceTree = "<group>"; };
 		7DB398401EA99869003A4768 /* PokeFinder-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PokeFinder-Bridging-Header.h"; sourceTree = "<group>"; };
+		7DC70B761EA9DD45005C374D /* PokemonAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokemonAnnotation.swift; sourceTree = "<group>"; };
 		AC4F41A24263AD644F9DE045 /* Pods-PokeFinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PokeFinder.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PokeFinder/Pods-PokeFinder.debug.xcconfig"; sourceTree = "<group>"; };
 		CB12AC9CE152712A7B082A22 /* Pods-PokeFinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PokeFinder.release.xcconfig"; path = "Pods/Target Support Files/Pods-PokeFinder/Pods-PokeFinder.release.xcconfig"; sourceTree = "<group>"; };
 		F02CC0600EB443B8E9DC0297 /* Pods_PokeFinder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PokeFinder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,6 +127,7 @@
 		7D9695FD1EA9947700D6A875 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7DC70B761EA9DD45005C374D /* PokemonAnnotation.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				7D9695E81EA9943C00D6A875 /* AppDelegate.swift in Sources */,
 				7DB398381EA99793003A4768 /* GeoFire.m in Sources */,
 				7DB3983B1EA99793003A4768 /* GFGeoHashQuery.m in Sources */,
+				7DC70B771EA9DD45005C374D /* PokemonAnnotation.swift in Sources */,
 				7DB3983C1EA99793003A4768 /* GFQuery.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
