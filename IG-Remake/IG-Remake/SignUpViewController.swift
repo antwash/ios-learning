@@ -84,9 +84,9 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     // sign up users
     func signUp() {
         
-        guard let email = emailField.text, !email.isEmpty else { return }
-        guard let name = usernameField.text, !name.isEmpty else { return }
-        guard let psswd = passwrdField.text, !psswd.isEmpty else { return }
+        guard let email = emailField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines), !email.isEmpty else { return }
+        guard let name = usernameField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines), !name.isEmpty else { return }
+        guard let psswd = passwrdField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines), !psswd.isEmpty else { return }
         
         
         FIRAuth.auth()?.createUser(withEmail: email, password: psswd, completion: { (user, error) in
@@ -98,17 +98,36 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             
             print("Successfully created user: ", user?.uid ?? "")
             
-            guard let uid = user?.uid  else { return }
-            let value = [uid : name]
             
-            FIRDatabase.database().reference().updateChildValues(value, withCompletionBlock: { (error, ref) in
+            // upload user profile picture
+            guard let profile_pic = self.photoButton.imageView?.image else { return }
+            guard let data = UIImageJPEGRepresentation(profile_pic, 0.5) else { return }
+            
+            let uid = UUID().uuidString
+            
+            FIRStorage.storage().reference().child("profile_images").child(uid).put(data, metadata: nil, completion: { (metadata, error) in
                 
                 if let err = error {
-                    print("Error: \(err)")
-                    print("Error saving username to DB for user \(uid)")
+                    print("Error uploading user profile image: ", err)
+                    return
                 }
                 
-                print("Successfully save user \(uid) username to DB.")
+                // profile image URL
+                guard let imageURL = metadata?.downloadURL()?.absoluteString else { return }
+                
+                guard let uid = user?.uid  else { return }
+                let user_dic = ["user_name": name, "profile_image": imageURL]
+                let values = [uid : user_dic]
+                
+                FIRDatabase.database().reference().updateChildValues(values, withCompletionBlock: { (error, ref) in
+                    if let err = error {
+                            print("Error: \(err)")
+                            print("Error saving username to DB for user \(uid)")
+                        }
+                                
+                            print("Successfully save user \(uid) username to DB.")
+                    })
+                print("Successfully uploaded image: ", imageURL)
             })
         })
     }
@@ -133,7 +152,25 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     func pickProfilePic() {
         let picker = UIImagePickerController()
             picker.delegate = self
-        self.present(picker, animated: true, completion: nil)
+            picker.allowsEditing = true
+        
+        present(picker, animated: true, completion: nil)
+    }
+    
+    // method called after picture selection
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        if let edited = info["UIImagePickerControllerEditedImage"] as? UIImage {
+            photoButton.setImage(edited, for: .normal)
+        }
+        else if let original = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+            photoButton.setImage(original, for: .normal)
+        }
+        
+        photoButton.layer.cornerRadius = photoButton.frame.width / 2
+        photoButton.layer.masksToBounds = true
+        
+        dismiss(animated: true, completion: nil)
     }
     
     fileprivate func setupSignUpFields() {
