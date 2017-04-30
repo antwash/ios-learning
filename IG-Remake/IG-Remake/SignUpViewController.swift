@@ -10,7 +10,8 @@ import UIKit
 import Firebase
 
 
-class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SignUpViewController: UIViewController, UIImagePickerControllerDelegate,
+UINavigationControllerDelegate {
 
     // Profile image button.
     let photoButton: UIButton = {
@@ -75,7 +76,9 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         // center photobutton
         view.addSubview(photoButton)
         
-        photoButton.anchors(top: view.topAnchor, topPad: 40, left: nil, leftPad: nil, right: nil, rightPad: nil, height: 140, width: 140, center: view.centerXAnchor)
+        photoButton.anchors(top: view.topAnchor, topPad: 40, left: nil, leftPad: nil, 
+                            right: nil, rightPad: nil, height: 140, width: 140, 
+                            center: view.centerXAnchor)
         
         // add stackview for signup fields
         setupSignUpFields()
@@ -84,9 +87,12 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     // sign up users
     func signUp() {
         
-        guard let email = emailField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines), !email.isEmpty else { return }
-        guard let name = usernameField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines), !name.isEmpty else { return }
-        guard let psswd = passwrdField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines), !psswd.isEmpty else { return }
+        guard let email = emailField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
+                        !email.isEmpty else { return }
+        guard let name = usernameField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
+                        !name.isEmpty else { return }
+        guard let psswd = passwrdField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
+                        !psswd.isEmpty else { return }
         
         
         FIRAuth.auth()?.createUser(withEmail: email, password: psswd, completion: { (user, error) in
@@ -105,7 +111,9 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             
             let uid = UUID().uuidString
             
-            FIRStorage.storage().reference().child("profile_images").child(uid).put(data, metadata: nil, completion: { (metadata, error) in
+            FIRStorage.storage().reference().child("profile_images").child(uid).put(data, 
+                                                                                    metadata: nil, 
+                                                                                    completion: { (metadata, error) in
                 
                 if let err = error {
                     print("Error uploading user profile image: ", err)
@@ -135,7 +143,9 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
     // checks form fields are filled with values
     func validateForm() {
         
-        let valid = !(emailField.text?.isEmpty)! && (!(usernameField.text?.isEmpty)!) && ((passwrdField.text?.characters.count)! > 6)
+        let valid = !(emailField.text?.isEmpty)! && 
+                    (!(usernameField.text?.isEmpty)!) && 
+                    ((passwrdField.text?.characters.count)! > 6)
         
         if valid {
             signupButton.isEnabled = true
