@@ -127,7 +127,7 @@ UINavigationControllerDelegate {
                 let user_dic = ["user_name": name, "profile_image": imageURL]
                 let values = [uid : user_dic]
                 
-                FIRDatabase.database().reference().updateChildValues(values, withCompletionBlock: { (error, ref) in
+                FIRDatabase.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (error, ref) in
                     if let err = error {
                             print("Error: \(err)")
                             print("Error saving username to DB for user \(uid)")
