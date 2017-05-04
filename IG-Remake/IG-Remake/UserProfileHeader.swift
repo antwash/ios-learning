@@ -19,8 +19,13 @@ class UserProfileHeader: UICollectionViewCell {
     
     let profileImage: UIImageView = {
         let image = UIImageView()
-            image.backgroundColor = .red
         return image
+    }()
+    
+    let nameLabel: UILabel = {
+        let label = UILabel()
+            label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
     }()
     
     let postLabel: UILabel = {
@@ -71,7 +76,7 @@ class UserProfileHeader: UICollectionViewCell {
     
     
     let editButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
             button.setTitle("Edit Profile", for: .normal)
             button.setTitleColor(.black, for: .normal)
             button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
@@ -123,6 +128,13 @@ class UserProfileHeader: UICollectionViewCell {
                              left: leftAnchor, leftPad: 15, right: nil, rightPad: nil, height: 80, width: 80)
         profileImage.layer.cornerRadius = 80 / 2
         profileImage.layer.masksToBounds = true
+        
+        addSubview(nameLabel)
+        
+        nameLabel.anchors(top: profileImage.bottomAnchor, topPad: 12, bottom: nil, bottomPad: 0,
+                          left: profileImage.leftAnchor, leftPad: 8, right: nil, rightPad: 0, height: 20, width: nil)
+        
+        
         
         setupProfileStats()
         setupBottomButtons()
@@ -193,6 +205,7 @@ class UserProfileHeader: UICollectionViewCell {
             
             DispatchQueue.main.async {
                 self.profileImage.image = UIImage(data: data)
+                self.nameLabel.text = self.user_profile?.userName
             }
         }.resume()
         
