@@ -19,12 +19,14 @@ extension UIColor {
 
 
 extension UIView {
-    func anchors(top: NSLayoutYAxisAnchor?, topPad: CGFloat?, left: NSLayoutXAxisAnchor?, leftPad: CGFloat?, right: NSLayoutXAxisAnchor?, rightPad: CGFloat?, height: CGFloat?, width: CGFloat?, center: NSLayoutXAxisAnchor?){
+    func anchors(top: NSLayoutYAxisAnchor?, topPad: CGFloat?, bottom: NSLayoutYAxisAnchor?, bottomPad: CGFloat?,
+                 left: NSLayoutXAxisAnchor?, leftPad: CGFloat?, right: NSLayoutXAxisAnchor?, rightPad: CGFloat?,
+                 height: CGFloat?, width: CGFloat?){
         
         self.translatesAutoresizingMaskIntoConstraints = false
         
-        if let center = center {
-            self.centerXAnchor.constraint(equalTo: center).isActive = true
+        if let bottom = bottom {
+            self.bottomAnchor.constraint(equalTo: bottom, constant: bottomPad!).isActive = true
         }
         
         if let top = top {

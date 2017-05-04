@@ -76,9 +76,10 @@ UINavigationControllerDelegate {
         // center photobutton
         view.addSubview(photoButton)
         
-        photoButton.anchors(top: view.topAnchor, topPad: 40, left: nil, leftPad: nil, 
-                            right: nil, rightPad: nil, height: 140, width: 140, 
-                            center: view.centerXAnchor)
+        photoButton.anchors(top: view.topAnchor, topPad: 40, bottom: nil, bottomPad: 0,
+                            left: nil, leftPad: nil, right: nil, rightPad: nil, height: 140,
+                            width: 140)
+        photoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         
         // add stackview for signup fields
         setupSignUpFields()
@@ -191,6 +192,8 @@ UINavigationControllerDelegate {
         
         view.addSubview(stackView)
         
-        stackView.anchors(top: photoButton.bottomAnchor, topPad: 20, left: view.leftAnchor, leftPad: 40, right: view.rightAnchor, rightPad: 40, height: 200, width: nil, center: nil)
+        stackView.anchors(top: photoButton.bottomAnchor, topPad: 20, bottom: nil, bottomPad: 0,
+                          left: view.leftAnchor, leftPad: 40, right: view.rightAnchor, rightPad: 40,
+                          height: 200, width: nil)
     }
 }
