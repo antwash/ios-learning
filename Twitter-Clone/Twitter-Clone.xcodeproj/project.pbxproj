@@ -12,7 +12,9 @@
 		7D4DD9621F09C00B0066CC5C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D4DD9611F09C00B0066CC5C /* Assets.xcassets */; };
 		7D4DD9651F09C00B0066CC5C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D4DD9631F09C00B0066CC5C /* LaunchScreen.storyboard */; };
 		7D730B351F09FD2C00FA4C2A /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D730B341F09FD2C00FA4C2A /* HomeController.swift */; };
-		7DFE66281F0A039800F8E056 /* Cells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE66271F0A039800F8E056 /* Cells.swift */; };
+		7DE919011F0AB33200EA1C2D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE919001F0AB33200EA1C2D /* User.swift */; };
+		7DE919031F0AB69400EA1C2D /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE919021F0AB69400EA1C2D /* UserCell.swift */; };
+		7DFE66281F0A039800F8E056 /* UserHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE66271F0A039800F8E056 /* UserHeaderFooter.swift */; };
 		7DFE662A1F0A03F100F8E056 /* HomeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFE66291F0A03F100F8E056 /* HomeDataSource.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,7 +25,9 @@
 		7D4DD9641F09C00B0066CC5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7D4DD9661F09C00B0066CC5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D730B341F09FD2C00FA4C2A /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
-		7DFE66271F0A039800F8E056 /* Cells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cells.swift; sourceTree = "<group>"; };
+		7DE919001F0AB33200EA1C2D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		7DE919021F0AB69400EA1C2D /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		7DFE66271F0A039800F8E056 /* UserHeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserHeaderFooter.swift; sourceTree = "<group>"; };
 		7DFE66291F0A03F100F8E056 /* HomeDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeDataSource.swift; sourceTree = "<group>"; };
 		98C4E575D808FC6550ED2375 /* Pods_Twitter_Clone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Twitter_Clone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D37F3721D13AB3E24AB75990 /* Pods-Twitter-Clone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twitter-Clone.release.xcconfig"; path = "Pods/Target Support Files/Pods-Twitter-Clone/Pods-Twitter-Clone.release.xcconfig"; sourceTree = "<group>"; };
@@ -78,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				7DFE66291F0A03F100F8E056 /* HomeDataSource.swift */,
+				7DE919001F0AB33200EA1C2D /* User.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -85,7 +90,8 @@
 		7DFE66251F0A037900F8E056 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7DFE66271F0A039800F8E056 /* Cells.swift */,
+				7DE919021F0AB69400EA1C2D /* UserCell.swift */,
+				7DFE66271F0A039800F8E056 /* UserHeaderFooter.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -239,7 +245,9 @@
 			files = (
 				7D4DD95B1F09C00B0066CC5C /* AppDelegate.swift in Sources */,
 				7D730B351F09FD2C00FA4C2A /* HomeController.swift in Sources */,
-				7DFE66281F0A039800F8E056 /* Cells.swift in Sources */,
+				7DE919031F0AB69400EA1C2D /* UserCell.swift in Sources */,
+				7DFE66281F0A039800F8E056 /* UserHeaderFooter.swift in Sources */,
+				7DE919011F0AB33200EA1C2D /* User.swift in Sources */,
 				7DFE662A1F0A03F100F8E056 /* HomeDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

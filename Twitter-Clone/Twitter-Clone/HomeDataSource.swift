@@ -9,14 +9,22 @@
 import LBTAComponents
 
 class HomeDataSource: Datasource {
-    let words = ["User1", "User2", "User3"]
     
+    let users: [User] = {
+        let user1 = User(name: "Anthony Washington", userName: "@antdwash",
+                         bioText: "iPhone, iPad, iOS Programming Community. Join us to learn Swift, Objective-C and build iOS apps!", profileImage: #imageLiteral(resourceName: "profile_image"))
+        let user2 = User(name: "Washington Anthony", userName: "@ayewash",
+                         bioText: "iPhone, iPad, iOS Programming Community. Join us to learn Swift, Objective-C and build iOS apps!", profileImage: #imageLiteral(resourceName: "profile_image"))
+        
+        return [user1, user2]
+    }()
+        
     override func numberOfItems(_ section: Int) -> Int {
-        return words.count
+        return users.count
     }
     
     override func item(_ indexPath: IndexPath) -> Any? {
-        return words[indexPath.item]
+        return users[indexPath.item]
     }
     
     override func cellClasses() -> [DatasourceCell.Type] {
