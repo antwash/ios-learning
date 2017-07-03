@@ -12,6 +12,8 @@ class HomeController: DatasourceController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
+        
         self.datasource = HomeDataSource()
     }
     
@@ -53,8 +55,5 @@ class HomeController: DatasourceController {
         
         return CGSize(width: view.frame.width, height: 150)
     }
-    
-    
-    
 }
 
