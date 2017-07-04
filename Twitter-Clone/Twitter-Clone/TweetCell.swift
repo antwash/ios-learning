@@ -33,6 +33,8 @@ class TweetCell: DatasourceCell {
     
     let message: UITextView = {
         let m = UITextView()
+            m.backgroundColor = .clear
+            m.isEditable = false
         return m
     }()
     
@@ -45,11 +47,37 @@ class TweetCell: DatasourceCell {
     }()
     
     
+    let replyB: UIButton = {
+        let b = UIButton(type: .system)
+            b.setImage(#imageLiteral(resourceName: "reply").withRenderingMode(.alwaysOriginal), for: .normal)
+        return b
+    }()
+    
+    let send_messageB: UIButton = {
+        let b = UIButton(type: .system)
+            b.setImage(#imageLiteral(resourceName: "send_message").withRenderingMode(.alwaysOriginal), for: .normal)
+        return b
+    }()
+    
+    let likeB: UIButton = {
+        let b = UIButton(type: .system)
+            b.setImage(#imageLiteral(resourceName: "like").withRenderingMode(.alwaysOriginal), for: .normal)
+        return b
+    }()
+    
+    let retweetB: UIButton = {
+        let b = UIButton(type: .system)
+            b.setImage(#imageLiteral(resourceName: "retweet").withRenderingMode(.alwaysOriginal), for: .normal)
+        return b
+    }()
+    
+    
     override func setupViews() {
         super.setupViews()
         backgroundColor = .white
         separatorLineView.isHidden = false
         separatorLineView.backgroundColor = UIColor(r: 230, g: 230, b: 230)
+        
         
         addSubview(profileImage)
         addSubview(message)
@@ -61,5 +89,32 @@ class TweetCell: DatasourceCell {
         message.anchor(topAnchor, left: profileImage.rightAnchor, bottom: bottomAnchor,
                        right: rightAnchor, topConstant: 4, leftConstant: 4,
                        bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        setupTweetBottomButtons()
     }
+    
+    fileprivate func setupTweetBottomButtons() {
+        // custome view -- so buttons won't look stretched
+        let replyView = UIView()
+        let retweetView = UIView()
+        let likeView = UIView()
+        let messageView = UIView()
+        
+        let stackView = UIStackView(arrangedSubviews: [replyView, retweetView, likeView, messageView])
+            stackView.axis = .horizontal
+            stackView.distribution = .fillEqually
+        
+        addSubview(stackView)
+        addSubview(replyB)
+        addSubview(retweetB)
+        addSubview(likeB)
+        addSubview(send_messageB)
+        
+        stackView.anchor(nil, left: message.leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 20)
+        replyB.anchor(nil, left: replyView.leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 20, heightConstant: 20)
+        retweetB.anchor(nil, left: retweetView.leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 20, heightConstant: 20)
+        likeB.anchor(nil, left: likeView.leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 20, heightConstant: 20)
+        send_messageB.anchor(nil, left: messageView.leftAnchor, bottom: bottomAnchor, right: nil, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 20, heightConstant: 20)
+    }
+    
 }

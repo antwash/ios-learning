@@ -59,5 +59,11 @@ class HomeController: DatasourceController {
         
         return CGSize(width: view.frame.width, height: 150)
     }
+    
+    
+    // recalls cell resizing when device rotates
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        collectionViewLayout.invalidateLayout()
+    }
 }
 
