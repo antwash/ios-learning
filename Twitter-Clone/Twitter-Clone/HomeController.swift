@@ -57,11 +57,22 @@ class HomeController: DatasourceController {
             return CGSize(width: view.frame.width, height: estimate.height + 65)
         }
         
+        if let user = self.datasource?.item(indexPath) as? Tweet {
+            let width = view.frame.width - 12 - 50 - 12 - 2
+            let size = CGSize(width: width, height: 1000)
+            let attributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 15)]
+            
+            // get text size to figure out amout of space needed for cell
+            let estimate = NSString(string: user.message).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+            
+            // add height of each component - username/name/padding
+            return CGSize(width: view.frame.width, height: estimate.height + 65)
+        }
         return CGSize(width: view.frame.width, height: 150)
     }
     
     
-    // recalls cell resizing when device rotates
+    // calls cell resizing when device rotates
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         collectionViewLayout.invalidateLayout()
     }
