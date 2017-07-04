@@ -25,6 +25,17 @@ extension HomeController {
         navigationItem.titleView = title
         navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.isTranslucent = false
+        
+        // remove default line from nav bar add custom view
+        let navbarseperator = UIView()
+            navbarseperator.backgroundColor = UIColor(r: 230, g: 230, b: 230)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        view.addSubview(navbarseperator)
+        navbarseperator.anchor(view.topAnchor, left: view.leftAnchor, bottom: nil,
+                               right: view.rightAnchor, topConstant: 0, leftConstant: 0,
+                               bottomConstant: 0, rightConstant: 0, widthConstant: 0,
+                               heightConstant: 0.5)
     }
     
     // setup left side of home navigation bar

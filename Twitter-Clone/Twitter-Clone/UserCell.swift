@@ -68,6 +68,8 @@ class UserCell: DatasourceCell {
     override func setupViews() {
         super.setupViews()
         
+        backgroundColor = .white
+        
         addSubview(profileImage)
         addSubview(nameLabel)
         addSubview(userName)
