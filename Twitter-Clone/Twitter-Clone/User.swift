@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 
 struct User {
@@ -14,4 +15,18 @@ struct User {
     let userName: String
     let bioText: String
     let profileImage: UIImage
+    
+    init(name: String, userName: String, bioText: String, profileImage: UIImage) {
+        self.name = name
+        self.userName = userName
+        self.bioText = bioText
+        self.profileImage = profileImage
+    }
+    
+    init(json: JSON) {
+        self.name = json["name"].stringValue
+        self.userName = json["username"].stringValue
+        self.bioText = json["bio"].stringValue
+        self.profileImage = UIImage()
+    }
 }
