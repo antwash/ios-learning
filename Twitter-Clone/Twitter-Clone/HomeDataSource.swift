@@ -13,24 +13,16 @@ import SwiftyJSON
 class HomeDataSource: Datasource, JSONDecodable {
     
     var users: [User] = []
+    var tweets: [Tweet] = []
 
     required init(json: JSON) throws {
-        guard let user_array = json["users"].array else {return}
-        for user in user_array {
-            let user = User(json: user)
-            users.append(user)
-        }
+        guard let user_array = json["users"].array else { return }
+        guard let tweet_array = json["tweets"].array else { return }
+        
+        // use swfit maping feature to create users/tweets from json
+        self.users = user_array.map({User(json: $0)})
+        self.tweets = tweet_array.map({Tweet(json: $0)})
     }
-    
-    let tweets: [Tweet] = {
-        let user = User(name: "Anthony Washington", userName: "@antdwash",
-                         bioText: "iPhone, iPad, iOS Programming Community. Join us to learn Swift, Objective-C and build iOS apps!", profileImage: #imageLiteral(resourceName: "profile_image"))
-        
-        let tweet1 = Tweet(user: user, message: "Testing")
-        let tweet2 = Tweet(user: user, message: "iPhone, iPad, iOS Programming Community. Join us to learn Swift, Objective-C and build iOS apps! iPhone, iPad, iOS Programming Community. Join us to learn Swift, Objective-C and build iOS apps! iPhone, iPad, iOS ")
-        
-        return [tweet1, tweet2]
-    }()
     
     override func numberOfItems(_ section: Int) -> Int {
         if section == 1 { return tweets.count }

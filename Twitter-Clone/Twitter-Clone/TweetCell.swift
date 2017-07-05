@@ -42,7 +42,6 @@ class TweetCell: DatasourceCell {
         let p = UIImageView()
         p.layer.cornerRadius = 5
         p.layer.masksToBounds = true
-        p.image = #imageLiteral(resourceName: "profile_image")
         return p
     }()
     

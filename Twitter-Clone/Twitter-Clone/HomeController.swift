@@ -73,6 +73,7 @@ class HomeController: DatasourceController {
             // add height of each component - username/name/padding
             return CGSize(width: view.frame.width, height: estimate.height + 65)
         }
+        print("HGEY")
         return CGSize(width: view.frame.width, height: 150)
     }
     
