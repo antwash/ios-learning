@@ -9,7 +9,7 @@
 import TRON
 import SwiftyJSON
 
-class Error: JSONDecodable {
+class jSONError: JSONDecodable {
     required init(json: JSON) throws {
         print("JSON error \n")
     }
@@ -20,12 +20,13 @@ struct Service {
     let tron = TRON(baseURL: "https://api.letsbuildthatapp.com/")
     static let sharedInstance = Service()
     
-    func fetchData(completion: @escaping (HomeDataSource) -> ()){
-        let request: APIRequest<HomeDataSource,Error> = tron.request("/twitter/home")
+    func fetchData(completion: @escaping (HomeDataSource?, Error?) -> ()){
+        let request: APIRequest<HomeDataSource,jSONError> = tron.request("/twitter/home")
         request.perform(withSuccess: { (homeDataSource) in
             // pass datasouce to completion handler function caller
-            completion(homeDataSource)
+            completion(homeDataSource, nil)
         }) { (err) in
+            completion(nil, err)
             print("Failed to fetch JSON ", err )
         }
     }

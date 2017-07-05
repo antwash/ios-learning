@@ -7,17 +7,40 @@
 //
 
 import LBTAComponents
+import TRON
 
 class HomeController: DatasourceController {
     
+    let errorMessage: UILabel = {
+        let l = UILabel()
+            l.text = "Sorry, something went wrong. Please try again later."
+            l.numberOfLines = 0
+            l.isHidden = true
+            l.textAlignment = .center
+        return l
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.addSubview(errorMessage)
+        errorMessage.fillSuperview()
         
         setupNavigationBar()
         collectionView?.backgroundColor = UIColor(r: 232, g: 236, b: 241)
         
         // fetched data using custom completion hander / singleton pattern object
-        Service.sharedInstance.fetchData { (dataSource) in
+        Service.sharedInstance.fetchData { (dataSource, err) in
+            if let err = err {
+                self.errorMessage.isHidden = false
+                if let apiError = err as? APIError<jSONError> {
+                    if apiError.response?.statusCode != 200 {
+                        self.errorMessage.text = "Error 404: Opps something went wrong!"
+                    }
+                }
+                return
+            }
             self.datasource = dataSource
         }
     }

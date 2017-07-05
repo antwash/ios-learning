@@ -16,9 +16,12 @@ class HomeDataSource: Datasource, JSONDecodable {
     var tweets: [Tweet] = []
 
     required init(json: JSON) throws {
-        guard let user_array = json["users"].array else { return }
-        guard let tweet_array = json["tweets"].array else { return }
-        
+        guard let user_array = json["users"].array, let tweet_array = json["tweets"].array else {
+            throw  NSError(domain: "com.letsbuildthatapp", code: 411,
+                           userInfo: [NSLocalizedDescriptionKey:
+                            "Parsing JSON not in valid JSON format."])
+        }
+
         // use swfit maping feature to create users/tweets from json
         self.users = user_array.map({User(json: $0)})
         self.tweets = tweet_array.map({Tweet(json: $0)})
