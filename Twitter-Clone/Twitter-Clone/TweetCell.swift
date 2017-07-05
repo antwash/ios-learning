@@ -13,6 +13,8 @@ class TweetCell: DatasourceCell {
     override var datasourceItem: Any? {
         didSet {
             guard let tweet = datasourceItem as? Tweet else { return }
+        
+            profileImage.loadImage(urlString: tweet.user.profileImageURL)
             
             let name = "\(tweet.user.name)  "
             let username = "\(tweet.user.userName) \n"
@@ -38,8 +40,8 @@ class TweetCell: DatasourceCell {
         return m
     }()
     
-    let profileImage: UIImageView = {
-        let p = UIImageView()
+    let profileImage: CachedImageView = {
+        let p = CachedImageView()
         p.layer.cornerRadius = 5
         p.layer.masksToBounds = true
         return p

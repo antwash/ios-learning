@@ -19,7 +19,7 @@ class UserCell: DatasourceCell {
             nameLabel.text = user.name
             userName.text = user.userName
             bioText.text = user.bioText
-            profileImage.image = user.profileImage
+            profileImage.loadImage(urlString: user.profileImageURL)
         }
     }
     
@@ -36,8 +36,8 @@ class UserCell: DatasourceCell {
         return u
     }()
     
-    let profileImage: UIImageView = {
-        let p = UIImageView()
+    let profileImage: CachedImageView = {
+        let p = CachedImageView()
         p.layer.cornerRadius = 5
         p.layer.masksToBounds = true
         return p

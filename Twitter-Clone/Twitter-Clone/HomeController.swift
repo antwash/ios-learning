@@ -71,32 +71,20 @@ class HomeController: DatasourceController {
         UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         // get user from row
-        if let user = self.datasource?.item(indexPath) as? User {
-            
-            // 12, 50 - comes from profile image constraints
-            let width = view.frame.width  - 12 - 50 - 12 - 2
-            let size = CGSize(width: width, height: 1000)
-            let attributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 15)]
-            
-            // get text size to figure out amout of space needed for cell
-            let estimate = NSString(string: user.bioText).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-            
-            // add height of each component - username/name/padding
-            return CGSize(width: view.frame.width, height: estimate.height + 65)
+        if indexPath.section == 0 {
+            guard let user = self.datasource?.item(indexPath) as? User else { return .zero }
+                // get text size to figure out amout of space needed for cell
+                let estimate = estimateHeight(user.bioText)
+                // add height of each component - username/name/padding
+                return CGSize(width: view.frame.width, height: estimate + 65)
         }
-        
-        if let user = self.datasource?.item(indexPath) as? Tweet {
-            let width = view.frame.width - 12 - 50 - 12 - 2
-            let size = CGSize(width: width, height: 1000)
-            let attributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 15)]
-            
-            // get text size to figure out amout of space needed for cell
-            let estimate = NSString(string: user.message).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-            
-            // add height of each component - username/name/padding
-            return CGSize(width: view.frame.width, height: estimate.height + 65)
+        else if indexPath.section == 1 {
+            guard let tweet = self.datasource?.item(indexPath) as? Tweet else { return .zero }
+                let estimate = estimateHeight(tweet.message)
+                // add height of each component - username/name/padding
+                return CGSize(width: view.frame.width, height: estimate + 65)
         }
-        print("HGEY")
+
         return CGSize(width: view.frame.width, height: 150)
     }
     
@@ -104,6 +92,14 @@ class HomeController: DatasourceController {
     // calls cell resizing when device rotates
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         collectionViewLayout.invalidateLayout()
+    }
+    
+    fileprivate func estimateHeight(_ text: String) -> CGFloat {
+        let width = view.frame.width - 12 - 50 - 12 - 2
+        let size = CGSize(width: width, height: 1000)
+        let attributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 15)]
+        let estimate = NSString(string: text).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+        return estimate.height
     }
 }
 
