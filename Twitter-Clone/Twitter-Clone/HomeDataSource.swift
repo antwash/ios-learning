@@ -10,6 +10,14 @@ import LBTAComponents
 import TRON
 import SwiftyJSON
 
+extension Collection where Iterator.Element == JSON{
+    
+    func decode<T: JSONDecodable>() throws -> [T] {
+        return try map({try T(json: $0)})
+    }
+}
+
+
 class HomeDataSource: Datasource, JSONDecodable {
     
     var users: [User] = []
@@ -22,9 +30,9 @@ class HomeDataSource: Datasource, JSONDecodable {
                             "Parsing JSON not in valid JSON format."])
         }
 
-        // use swfit maping feature to create users/tweets from json
-        self.users = user_array.map({User(json: $0)})
-        self.tweets = tweet_array.map({Tweet(json: $0)})
+        // use generic fuction
+        self.users = try user_array.decode()
+        self.tweets = try tweet_array.decode()
     }
     
     override func numberOfItems(_ section: Int) -> Int {
