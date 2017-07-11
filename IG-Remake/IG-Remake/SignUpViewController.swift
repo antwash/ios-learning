@@ -113,16 +113,12 @@ UINavigationControllerDelegate {
         guard let psswd = passwrdField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),
                         !psswd.isEmpty else { return }
         
-        
         FIRAuth.auth()?.createUser(withEmail: email, password: psswd, completion: { (user, error) in
-        
             if let err = error {
                 print("Error creating user: ", err)
                 return
             }
-            
             print("Successfully created user: ", user?.uid ?? "")
-            
             
             // upload user profile picture
             guard let profile_pic = self.photoButton.imageView?.image else { return }
@@ -133,7 +129,6 @@ UINavigationControllerDelegate {
             FIRStorage.storage().reference().child("profile_images").child(uid).put(data, 
                                                                                     metadata: nil, 
                                                                                     completion: { (metadata, error) in
-                
                 if let err = error {
                     print("Error uploading user profile image: ", err)
                     return
@@ -141,7 +136,6 @@ UINavigationControllerDelegate {
                 
                 // profile image URL
                 guard let imageURL = metadata?.downloadURL()?.absoluteString else { return }
-                
                 guard let uid = user?.uid  else { return }
                 let user_dic = ["user_name": name, "profile_image": imageURL]
                 let values = [uid : user_dic]
@@ -153,7 +147,12 @@ UINavigationControllerDelegate {
                         }
                                 
                             print("Successfully save user \(uid) username to DB.")
-                    })
+                    
+                    guard let mainTabController = UIApplication.shared.keyWindow?.rootViewController
+                        as? MainTabController  else { return }
+                    mainTabController.setupViewControllers()
+                    self.dismiss(animated: true, completion: nil)
+                })
                 print("Successfully uploaded image: ", imageURL)
             })
         })

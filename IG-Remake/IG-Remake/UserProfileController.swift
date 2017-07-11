@@ -107,6 +107,8 @@ UICollectionViewDelegateFlowLayout {
         alert.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (_) in
             do {
                 try FIRAuth.auth()?.signOut()
+                let navagation = UINavigationController(rootViewController: LoginController())
+                self.present(navagation, animated: true, completion: nil)
             }catch let error {
                 print("Error signing out ", error)
             }

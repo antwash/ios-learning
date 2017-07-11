@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginController: UIViewController {
     
@@ -31,6 +32,7 @@ class LoginController: UIViewController {
         email.backgroundColor = UIColor(white: 0, alpha: 0.03)
         email.borderStyle = .roundedRect
         email.font = UIFont.systemFont(ofSize: 14)
+        email.addTarget(self, action: #selector(textInputChanged), for: .editingChanged)
         return email
     }()
     
@@ -42,6 +44,7 @@ class LoginController: UIViewController {
         psswd.backgroundColor = UIColor(white: 0, alpha: 0.03)
         psswd.borderStyle = .roundedRect
         psswd.font = UIFont.systemFont(ofSize: 14)
+        psswd.addTarget(self, action: #selector(textInputChanged), for: .editingChanged)
         return psswd
     }()
     
@@ -49,10 +52,12 @@ class LoginController: UIViewController {
     let loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Login", for: .normal)
+        button.isEnabled = false
         button.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(loginUser), for: .touchUpInside)
         return button
     }()
 
@@ -95,6 +100,42 @@ class LoginController: UIViewController {
         navigationController?.pushViewController(SignUpViewController(), animated: true)
     }
     
+    func textInputChanged() {
+        let valid = !(emailField.text?.isEmpty)! &&
+            ((passwrdField.text?.characters.count)! > 6)
+        
+        if valid {
+            loginButton.isEnabled = true
+            loginButton.backgroundColor = UIColor.rgb(red: 17, green: 154, blue: 237)
+        }
+        else {
+            loginButton.isEnabled = false
+            loginButton.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
+        }
+
+    
+    }
+    
+    func loginUser() {
+        guard let email = emailField.text else { return }
+        guard let psswd = passwrdField.text else { return }
+        
+        
+        FIRAuth.auth()?.signIn(withEmail: email, password: psswd, completion: { (user, error) in
+            if let err = error {
+                print("Failed signing in: ", err)
+                return
+            }
+            
+            guard let mainTabController = UIApplication.shared.keyWindow?.rootViewController as? MainTabController  else { return }
+            mainTabController.setupViewControllers()
+            self.dismiss(animated: true, completion: nil)
+            
+        })
+        
+        
+    }
+    
     fileprivate func setupSignUpFields() {
         let stackView = UIStackView(arrangedSubviews: [emailField, passwrdField, loginButton])
         stackView.axis = .vertical
@@ -107,5 +148,4 @@ class LoginController: UIViewController {
                           right: view.rightAnchor, rightPad: 40, height: 140, width: 0)
 
     }
-   
 }
