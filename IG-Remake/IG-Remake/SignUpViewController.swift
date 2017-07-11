@@ -68,20 +68,38 @@ UINavigationControllerDelegate {
         return psswd
     }()
     
+    let signInButton : UIButton = {
+        let b = UIButton(type: .system)
+        let title = NSMutableAttributedString(string: "Already have an account?  ",
+                                              attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14),
+                                                           NSForegroundColorAttributeName: UIColor.lightGray])
+        title.append(NSAttributedString(string: "Sign In", attributes: [NSFontAttributeName:
+            UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName:
+                UIColor.rgb(red: 14, green: 154, blue: 237)]))
+        
+        b.setAttributedTitle(title, for: .normal)
+        b.addTarget(self, action: #selector(showLoginController), for: .touchUpInside)
+        return b
+    }()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // add photbutton
-        // set button width and height constraint
-        // center photobutton
+        
         view.addSubview(photoButton)
+        view.addSubview(signInButton)
+        view.backgroundColor = .white
         
         photoButton.anchors(top: view.topAnchor, topPad: 40, bottom: nil, bottomPad: 0,
                             left: nil, leftPad: nil, right: nil, rightPad: nil, height: 140,
                             width: 140)
-        photoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        photoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        // add stackview for signup fields
+        signInButton.anchors(top: nil, topPad: 0, bottom: view.bottomAnchor,
+                             bottomPad: 0, left: view.leftAnchor, leftPad: 0,
+                             right: view.rightAnchor, rightPad: 0, height: 50, width: 0)
+
         setupSignUpFields()
     }
     
@@ -194,6 +212,10 @@ UINavigationControllerDelegate {
         
         stackView.anchors(top: photoButton.bottomAnchor, topPad: 20, bottom: nil, bottomPad: 0,
                           left: view.leftAnchor, leftPad: 40, right: view.rightAnchor, rightPad: 40,
-                          height: 200, width: nil)
+                          height: 200, width: 0)
+    }
+    
+    func showLoginController() {
+        navigationController?.popViewController(animated: true)
     }
 }

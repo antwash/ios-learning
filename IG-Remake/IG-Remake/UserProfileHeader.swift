@@ -94,7 +94,7 @@ class UserProfileHeader: UICollectionViewCell {
     
     let gridButton: UIButton = {
         let button = UIButton(type: .system)
-            button.setImage(#imageLiteral(resourceName: "grid_view"), for: .normal)
+            button.setImage(#imageLiteral(resourceName: "grid"), for: .normal)
         return button
     }()
     
@@ -132,7 +132,7 @@ class UserProfileHeader: UICollectionViewCell {
         addSubview(nameLabel)
         
         nameLabel.anchors(top: profileImage.bottomAnchor, topPad: 12, bottom: nil, bottomPad: 0,
-                          left: profileImage.leftAnchor, leftPad: 8, right: nil, rightPad: 0, height: 20, width: nil)
+                          left: profileImage.leftAnchor, leftPad: 8, right: nil, rightPad: 0, height: 20, width: 0)
         
         
         
@@ -155,11 +155,11 @@ class UserProfileHeader: UICollectionViewCell {
         
         stackView.anchors(top: topAnchor, topPad: 12, bottom: nil, bottomPad: 0,
                           left: profileImage.rightAnchor, leftPad: 12, right: rightAnchor,
-                          rightPad: 12, height: 50, width: nil)
+                          rightPad: 12, height: 50, width: 0)
         
         editButton.anchors(top: stackView.bottomAnchor, topPad: 8, bottom: nil, bottomPad: 0,
                            left: stackView.leftAnchor, leftPad: 8, right: stackView.rightAnchor,
-                           rightPad: 8, height: 25, width: nil)
+                           rightPad: 8, height: 25, width: 0)
     
     }
     
@@ -178,15 +178,15 @@ class UserProfileHeader: UICollectionViewCell {
         
         stackView.anchors(top: nil, topPad: 0, bottom: bottomAnchor, bottomPad: 0,
                           left: leftAnchor, leftPad: 0, right: rightAnchor, rightPad: 0,
-                          height: 50, width: nil)
+                          height: 50, width: 0)
         
         topDivder.anchors(top: nil, topPad: 0, bottom: stackView.topAnchor, bottomPad: 0,
                           left: leftAnchor, leftPad: 0, right: rightAnchor, rightPad: 0,
-                          height: 0.5, width: nil)
+                          height: 0.5, width: 0)
         
         bottomDivder.anchors(top: bottomAnchor, topPad: 0, bottom: nil, bottomPad: 0,
                              left: leftAnchor, leftPad: 0, right: rightAnchor, rightPad: 0,
-                             height: 0.5, width: nil)
+                             height: 0.5, width: 0)
         
     }
     

@@ -24,6 +24,7 @@ UICollectionViewDelegateFlowLayout {
                                  withReuseIdentifier: "header")
         collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellID)
         
+        setupLogoutButton()
         getUser()
     }
     
@@ -91,4 +92,26 @@ UICollectionViewDelegateFlowLayout {
             print("Faild to fetch user: ", error)
         }
     }
+    
+    fileprivate func setupLogoutButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear").withRenderingMode(.alwaysOriginal),
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(logOut))
+    }
+    
+    func logOut() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        present(alert, animated: true, completion: nil)
+        
+        alert.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (_) in
+            do {
+                try FIRAuth.auth()?.signOut()
+            }catch let error {
+                print("Error signing out ", error)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+    }
+    
 }
