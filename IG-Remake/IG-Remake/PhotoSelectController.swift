@@ -16,6 +16,9 @@ UICollectionViewDelegateFlowLayout {
     let cellId = "cellId"
     let headerId = "headerId"
     var images = [UIImage]()
+    var assests = [PHAsset]()
+    var selectedImage: UIImage?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +28,7 @@ UICollectionViewDelegateFlowLayout {
         
         collectionView?.backgroundColor = .white
         collectionView?.register(PhotoSelectCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.register(UICollectionViewCell.self, forSupplementaryViewOfKind:
+        collectionView?.register(PhotoSelectionHeader.self, forSupplementaryViewOfKind:
             UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
     }
     
@@ -41,9 +44,25 @@ UICollectionViewDelegateFlowLayout {
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.selectedImage = images[indexPath.item]
+        self.collectionView?.reloadData()
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath)
-            header.backgroundColor = .blue
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! PhotoSelectionHeader
+        
+        if let selected = selectedImage {
+            if let index = images.index(of: selected) {
+                let selectedAssest = assests[index]
+                let targetSize = CGSize(width: 600, height: 600)
+                let imageManager = PHImageManager.default()
+                    imageManager.requestImage(for: selectedAssest, targetSize: targetSize, contentMode: .default, options: nil, resultHandler: { (image, info) in
+                        
+                          header.image.image = image
+                    })
+                }
+            }
         return header
     }
     
@@ -79,26 +98,42 @@ UICollectionViewDelegateFlowLayout {
                                                             action: #selector(posting))
     }
     
-    fileprivate func getPhotos() {
+    fileprivate func fetchOptions() -> PHFetchOptions {
         let fetchOptions = PHFetchOptions()
-        let photos = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+            fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate",
+                                            ascending: false)]
+        return fetchOptions
+    }
+    
+    fileprivate func getPhotos() {
+        let photos = PHAsset.fetchAssets(with: .image, options: fetchOptions())
+        
+        DispatchQueue.global(qos: .background).async {
             photos.enumerateObjects({ (assest, count, stop) in
-                print(assest)
                 
-            let targerSize = CGSize(width: 350, height: 350)
+            let targerSize = CGSize(width: 200, height: 200)
             let options = PHImageRequestOptions()
                 options.isSynchronous = true
             let imageManager = PHImageManager()
                 imageManager.requestImage(for: assest, targetSize: targerSize,
-                contentMode: .aspectFit, options: options, resultHandler: { (image, info) in
+                    contentMode: .aspectFit, options: options, resultHandler: { (image, info) in
+                    
                     guard let image = image else { return }
                     self.images.append(image)
+                    self.assests.append(assest)
+                
+                    if self.selectedImage == nil {
+                        self.selectedImage = image
+                    }
                     
-                if count == photos.count - 1 {
-                    self.collectionView?.reloadData()
-                }
+                    if count == photos.count - 1 {
+                        DispatchQueue.main.async {
+                            self.collectionView?.reloadData()
+                        }
+                    }
+                })
             })
-        })
+        }
     }
     
     
