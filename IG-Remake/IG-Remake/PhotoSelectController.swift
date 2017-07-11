@@ -7,33 +7,37 @@
 //
 
 import UIKit
+import Photos
 
 
-class PhototSelectController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class PhototSelectController: UICollectionViewController,
+UICollectionViewDelegateFlowLayout {
     
     let cellId = "cellId"
     let headerId = "headerId"
+    var images = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView?.backgroundColor = .yellow
-    
+        getPhotos()
         setupNavButtons()
-        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        
+        collectionView?.backgroundColor = .white
+        collectionView?.register(PhotoSelectCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.register(UICollectionViewCell.self, forSupplementaryViewOfKind:
             UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
-    
     }
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return images.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-            cell.backgroundColor = .red
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PhotoSelectCell
+            cell.image.image = images[indexPath.item]
+        
         return cell
     }
     
@@ -73,6 +77,28 @@ class PhototSelectController: UICollectionViewController, UICollectionViewDelega
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(posting))
+    }
+    
+    fileprivate func getPhotos() {
+        let fetchOptions = PHFetchOptions()
+        let photos = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+            photos.enumerateObjects({ (assest, count, stop) in
+                print(assest)
+                
+            let targerSize = CGSize(width: 350, height: 350)
+            let options = PHImageRequestOptions()
+                options.isSynchronous = true
+            let imageManager = PHImageManager()
+                imageManager.requestImage(for: assest, targetSize: targerSize,
+                contentMode: .aspectFit, options: options, resultHandler: { (image, info) in
+                    guard let image = image else { return }
+                    self.images.append(image)
+                    
+                if count == photos.count - 1 {
+                    self.collectionView?.reloadData()
+                }
+            })
+        })
     }
     
     
