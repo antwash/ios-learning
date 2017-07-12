@@ -21,6 +21,7 @@
 		B10D3A5B1F152C2900292877 /* PhotoSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10D3A5A1F152C2900292877 /* PhotoSelectController.swift */; };
 		B10D3A5D1F155A3600292877 /* PhotoSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10D3A5C1F155A3600292877 /* PhotoSelectCell.swift */; };
 		B10D3A5F1F15634100292877 /* PhotoSelectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10D3A5E1F15634100292877 /* PhotoSelectionHeader.swift */; };
+		B10D3A611F15D53600292877 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10D3A601F15D53600292877 /* ShareController.swift */; };
 		B17D34661F146FE10071835B /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17D34651F146FE10071835B /* LoginController.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,7 @@
 		B10D3A5A1F152C2900292877 /* PhotoSelectController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoSelectController.swift; sourceTree = "<group>"; };
 		B10D3A5C1F155A3600292877 /* PhotoSelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoSelectCell.swift; sourceTree = "<group>"; };
 		B10D3A5E1F15634100292877 /* PhotoSelectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoSelectionHeader.swift; sourceTree = "<group>"; };
+		B10D3A601F15D53600292877 /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
 		B17D34651F146FE10071835B /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		F24711795FC2869AB398BE81 /* Pods-IG-Remake.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IG-Remake.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IG-Remake/Pods-IG-Remake.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,6 +123,7 @@
 		B10D3A561F152BA000292877 /* Add Photo */ = {
 			isa = PBXGroup;
 			children = (
+				B10D3A601F15D53600292877 /* ShareController.swift */,
 				B10D3A5C1F155A3600292877 /* PhotoSelectCell.swift */,
 				B10D3A5E1F15634100292877 /* PhotoSelectionHeader.swift */,
 				B10D3A5A1F152C2900292877 /* PhotoSelectController.swift */,
@@ -298,6 +301,7 @@
 				7D62B6C41EB1A9EB000FDB79 /* SignUpViewController.swift in Sources */,
 				7D62B6C91EB1C8F4000FDB79 /* Extensions.swift in Sources */,
 				B10D3A5B1F152C2900292877 /* PhotoSelectController.swift in Sources */,
+				B10D3A611F15D53600292877 /* ShareController.swift in Sources */,
 				7D94E0BB1EB7BE5D008E7E9E /* MainTabController.swift in Sources */,
 				B10D3A5D1F155A3600292877 /* PhotoSelectCell.swift in Sources */,
 				7DFF7AB21EB94A3C0067C265 /* UserProfileHeader.swift in Sources */,

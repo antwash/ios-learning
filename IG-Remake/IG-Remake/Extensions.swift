@@ -26,7 +26,7 @@ extension UIView {
         self.translatesAutoresizingMaskIntoConstraints = false
         
         if let bottom = bottom {
-            self.bottomAnchor.constraint(equalTo: bottom, constant: bottomPad!).isActive = true
+            self.bottomAnchor.constraint(equalTo: bottom, constant: -bottomPad!).isActive = true
         }
         
         if let top = top {

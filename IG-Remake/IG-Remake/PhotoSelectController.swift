@@ -18,6 +18,7 @@ UICollectionViewDelegateFlowLayout {
     var images = [UIImage]()
     var assests = [PHAsset]()
     var selectedImage: UIImage?
+    var headerCopy: PhotoSelectionHeader?
     
     
     override func viewDidLoad() {
@@ -47,10 +48,15 @@ UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.selectedImage = images[indexPath.item]
         self.collectionView?.reloadData()
+        
+        let indexPath = IndexPath(item: 0, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! PhotoSelectionHeader
+        
+        self.headerCopy = header
         
         if let selected = selectedImage {
             if let index = images.index(of: selected) {
@@ -137,7 +143,13 @@ UICollectionViewDelegateFlowLayout {
     }
     
     
-    func posting() {}
+    func posting() {
+        let share = ShareController()
+            share.selected = headerCopy?.image.image
+        navigationController?.pushViewController(share, animated: true)
+    }
+    
+    
     func cancel() { dismiss(animated: true, completion: nil) }
     override var prefersStatusBarHidden: Bool { return true }
     
