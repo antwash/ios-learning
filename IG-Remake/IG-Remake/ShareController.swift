@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ShareController: UIViewController {
     
@@ -40,6 +41,50 @@ class ShareController: UIViewController {
     override var prefersStatusBarHidden: Bool { return true }
     
     func sharePhoto() {
+        guard let image = selected else { return }
+        guard let data = UIImageJPEGRepresentation(image, 0.5) else { return }
+        let fileName = NSUUID().uuidString
+        
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        
+        FIRStorage.storage().reference().child("posts").child(fileName).put(data, metadata: nil) { (metadata, error) in
+            
+            if let err = error {
+                print("Failed to upload post: ", err)
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
+            }
+            
+            guard let imageURL = metadata?.downloadURL()?.absoluteString else {
+                return }
+            
+            self.saveToDatabase(imageUrl: imageURL)
+            print("Uploaded post successfully: ", imageURL)
+        }
+        
+    }
+    
+    fileprivate func saveToDatabase(imageUrl: String) {
+        guard let image = selected else { return }
+        guard let caption = caption.text else { return }
+        guard let id = FIRAuth.auth()?.currentUser?.uid else { return }
+        
+        let userPost = FIRDatabase.database().reference().child("posts").child(id)
+        let ref = userPost.childByAutoId()
+        let value = ["imageURL": imageUrl, "caption": caption,
+                     "imageWidth": image.size.width,
+                     "imageHeight": image.size.height,
+                     "createdData": Date.timeIntervalSinceReferenceDate] as [String : Any]
+        
+        ref.updateChildValues(value) { (error, ref) in
+            if let error = error {
+                print("Failed to save post to database: ", error)
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
+                return
+            }
+            print("Successfully saved post to database.")
+            self.dismiss(animated: true, completion: nil)
+        }
+    
     
     }
     
@@ -56,7 +101,5 @@ class ShareController: UIViewController {
         imageSharing.anchors(top: shareContainer.topAnchor, topPad: 8, bottom: shareContainer.bottomAnchor, bottomPad: 8, left: shareContainer.leftAnchor, leftPad: 8, right: nil, rightPad: 0, height: 0, width: 84)
         
         caption.anchors(top: shareContainer.topAnchor, topPad: 8, bottom: shareContainer.bottomAnchor, bottomPad: 8, left: imageSharing.rightAnchor, leftPad: 8, right: shareContainer.rightAnchor, rightPad: 8, height: 0, width: 0)
-    
-    
     }
 }
