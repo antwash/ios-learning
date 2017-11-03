@@ -51,43 +51,64 @@ class SignUpController: UIViewController {
             s.isEnabled = false
             s.setTitle("Sign Up", for: .normal)
             s.setTitleColor(.white, for: .normal)
+            s.backgroundColor = BUTTON_DISABLED_BLUE
             s.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-            s.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
             s.addTarget(self, action: #selector(letsSignUp), for: .touchUpInside)
         return s
     }()
+    
+    let login: UIButton = {
+        let l = UIButton(type: .system)
+        
+        let attributed = NSMutableAttributedString(string: "Already have a account? ", attributes:
+            [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14),
+             NSAttributedStringKey.foregroundColor: UIColor.lightGray])
+        
+        attributed.append(NSAttributedString(string: "Sign In", attributes:
+            [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 14),
+             NSAttributedStringKey.foregroundColor: BUTTON_ENABLED_BLUE]))
+        
+            l.setAttributedTitle(attributed, for: .normal)
+            l.addTarget(self, action: #selector(presentLogin), for: .touchUpInside)
+        return l
+    }()
+    
+    @objc func presentLogin() {
+        navigationController?.popViewController(animated: true)
+    }
     
     @objc func handleChange() {
         guard let email = email.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         guard let username = username.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         guard let psswd = psswd.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         
-        if isValidForm(e: email, u: username, p: psswd) { signup.isEnabled = true }
-        else { signup.isEnabled = false }
+        if isValidForm(e: email, u: username, p: psswd) {
+            signup.isEnabled = true
+            signup.backgroundColor = BUTTON_ENABLED_BLUE
+        } else {
+            signup.isEnabled = false
+            signup.backgroundColor = BUTTON_DISABLED_BLUE
+        }
     }
     
     private func isValidForm(e: String, u: String, p: String) -> Bool{
         if isValidEmail(e: e) {
             if isValidPsswd(p: p) {
                 if isValidUserName(u: u) {
-                    signup.backgroundColor = UIColor.rgb(red: 17, green: 154, blue: 237)
                     return true
                 }
             }
         }
-        signup.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
         return false
     }
     
     private func isValidEmail(e: String) -> Bool {
-        let regex = "[A-Z0-9a-z._]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let validate = NSPredicate(format: "SELF MATCHES %@", regex)
+        let validate = NSPredicate(format: "SELF MATCHES %@", EMAIL_REGEX)
         return validate.evaluate(with: e)
     }
     
     private func isValidUserName(u: String) -> Bool {
-        let regex = "^[a-zA-Z0-9._-]{3,}$"
-        let validate = NSPredicate(format: "SELF MATCHES %@", regex)
+        let validate = NSPredicate(format: "SELF MATCHES %@", USERNAME_REGEX)
         return validate.evaluate(with: u)
     }
     
@@ -137,6 +158,12 @@ class SignUpController: UIViewController {
                             print("Failed to save user info into db:", err)
                             return
                         }
+
+                        guard let main = UIApplication.shared.keyWindow?.rootViewController
+                            as? MainTabController else { return }
+                        
+                        main.configureUserProfile()
+                        self.dismiss(animated: true, completion: nil)
                     })
                 })
             }
@@ -153,6 +180,7 @@ class SignUpController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(addPhotoButton)
         view.addSubview(stackView)
+        view.addSubview(login)
         
         addPhotoButton.anchors(top: view.topAnchor, toppad: 40, bottom: nil, bottompad: 0,
                                left: nil, leftpad: 0, right: nil, rightpad: 0,
@@ -162,6 +190,10 @@ class SignUpController: UIViewController {
         stackView.anchors(top: addPhotoButton.bottomAnchor, toppad: 20, bottom: nil, bottompad: 0,
                           left: view.leftAnchor, leftpad: 40, right: view.rightAnchor, rightpad: 40,
                           height: 200, width: 0)
+        
+        login.anchors(top: nil, toppad: 0, bottom: view.bottomAnchor,
+                       bottompad: 0, left: view.leftAnchor, leftpad: 0,
+                       right: view.rightAnchor, rightpad: 0, height: 50, width: 0)
     }
 }
 
