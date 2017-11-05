@@ -19,6 +19,7 @@
 		B1AF237B1FA8483600CE81C5 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AF237A1FA8483600CE81C5 /* SignUpController.swift */; };
 		B1AF23801FA8483600CE81C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1AF237F1FA8483600CE81C5 /* Assets.xcassets */; };
 		B1AF23831FA8483600CE81C5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1AF23811FA8483600CE81C5 /* LaunchScreen.storyboard */; };
+		B1C42E051FAFB77B001B6AAE /* SharePhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C42E041FAFB77B001B6AAE /* SharePhotoController.swift */; };
 		B1F7D2C31FAB689B0096F30A /* ProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F7D2C21FAB689B0096F30A /* ProfileController.swift */; };
 		B1F7D2C51FAB696C0096F30A /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F7D2C41FAB696C0096F30A /* MainTabController.swift */; };
 /* End PBXBuildFile section */
@@ -40,6 +41,7 @@
 		B1AF237F1FA8483600CE81C5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1AF23821FA8483600CE81C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B1AF23841FA8483600CE81C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1C42E041FAFB77B001B6AAE /* SharePhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePhotoController.swift; sourceTree = "<group>"; };
 		B1F7D2C21FAB689B0096F30A /* ProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileController.swift; sourceTree = "<group>"; };
 		B1F7D2C41FAB696C0096F30A /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,6 +92,7 @@
 			children = (
 				B1A5FC841FAEB8EB004548CB /* PostPhotoCell.swift */,
 				B1A5FC821FAEB6C4004548CB /* PostPhotoController.swift */,
+				B1C42E041FAFB77B001B6AAE /* SharePhotoController.swift */,
 			);
 			path = PostPhoto;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1C42E051FAFB77B001B6AAE /* SharePhotoController.swift in Sources */,
 				B1A5FC851FAEB8EB004548CB /* PostPhotoCell.swift in Sources */,
 				B1AF237B1FA8483600CE81C5 /* SignUpController.swift in Sources */,
 				B13D2C3F1FAAB8FE00CBDB8B /* Extensions.swift in Sources */,

@@ -13,6 +13,7 @@ class PostPhotoController: UICollectionViewController {
     var images: [UIImage] = []
     var assets: [PHAsset] = []
     var selectedImage: UIImage?
+    var selectedHeader: PostPhotoCell?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,12 +47,13 @@ class PostPhotoController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedImage = images[indexPath.item]
         self.collectionView?.reloadData()
+        collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind
+    override func collectionView(_ collectioniView: UICollectionView, viewForSupplementaryElementOfKind
         kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind:
+        let header = collectionView?.dequeueReusableSupplementaryView(ofKind:
             kind, withReuseIdentifier: headerId, for: indexPath) as! PostPhotoCell
         
         if let select = selectedImage {
@@ -65,6 +67,7 @@ class PostPhotoController: UICollectionViewController {
                 })
             }
         }
+        selectedHeader = header
         return header
     }
     
@@ -119,7 +122,9 @@ class PostPhotoController: UICollectionViewController {
     @objc func cancel() { dismiss(animated: true, completion: nil) }
     
     @objc func share() {
-       print("SHARE")
+        let share = SharePhotoController()
+            share.selectedImage = selectedHeader?.photo.image
+        navigationController?.pushViewController(share, animated: true)
     }
 }
 
