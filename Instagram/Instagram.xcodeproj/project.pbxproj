@@ -15,7 +15,6 @@
 		B1A58FFD1FAAC14C00303BEB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1A58FFC1FAAC14C00303BEB /* GoogleService-Info.plist */; };
 		B1A5FC831FAEB6C4004548CB /* PostPhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A5FC821FAEB6C4004548CB /* PostPhotoController.swift */; };
 		B1A5FC851FAEB8EB004548CB /* PostPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A5FC841FAEB8EB004548CB /* PostPhotoCell.swift */; };
-		B1A5FC871FAEBA07004548CB /* PostPhotoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A5FC861FAEBA07004548CB /* PostPhotoHeader.swift */; };
 		B1AF23791FA8483600CE81C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AF23781FA8483600CE81C5 /* AppDelegate.swift */; };
 		B1AF237B1FA8483600CE81C5 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AF237A1FA8483600CE81C5 /* SignUpController.swift */; };
 		B1AF23801FA8483600CE81C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1AF237F1FA8483600CE81C5 /* Assets.xcassets */; };
@@ -35,7 +34,6 @@
 		B1A58FFC1FAAC14C00303BEB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B1A5FC821FAEB6C4004548CB /* PostPhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhotoController.swift; sourceTree = "<group>"; };
 		B1A5FC841FAEB8EB004548CB /* PostPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhotoCell.swift; sourceTree = "<group>"; };
-		B1A5FC861FAEBA07004548CB /* PostPhotoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhotoHeader.swift; sourceTree = "<group>"; };
 		B1AF23751FA8483600CE81C5 /* Instagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1AF23781FA8483600CE81C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1AF237A1FA8483600CE81C5 /* SignUpController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
@@ -91,7 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				B1A5FC841FAEB8EB004548CB /* PostPhotoCell.swift */,
-				B1A5FC861FAEBA07004548CB /* PostPhotoHeader.swift */,
 				B1A5FC821FAEB6C4004548CB /* PostPhotoController.swift */,
 			);
 			path = PostPhoto;
@@ -273,7 +270,6 @@
 				B1A5FC851FAEB8EB004548CB /* PostPhotoCell.swift in Sources */,
 				B1AF237B1FA8483600CE81C5 /* SignUpController.swift in Sources */,
 				B13D2C3F1FAAB8FE00CBDB8B /* Extensions.swift in Sources */,
-				B1A5FC871FAEBA07004548CB /* PostPhotoHeader.swift in Sources */,
 				B17303B51FABC37700BF2D88 /* ProfileHeader.swift in Sources */,
 				B1A5FC831FAEB6C4004548CB /* PostPhotoController.swift in Sources */,
 				B1F7D2C51FAB696C0096F30A /* MainTabController.swift in Sources */,

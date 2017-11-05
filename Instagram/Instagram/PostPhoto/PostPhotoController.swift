@@ -20,7 +20,7 @@ class PostPhotoController: UICollectionViewController {
         
         collectionView?.backgroundColor = .white
         collectionView?.register(PostPhotoCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView?.register(PostPhotoHeader.self, forSupplementaryViewOfKind:
+        collectionView?.register(PostPhotoCell.self, forSupplementaryViewOfKind:
             UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         
         fetchUserPhotos()
@@ -52,7 +52,7 @@ class PostPhotoController: UICollectionViewController {
         kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         let header = collectionView.dequeueReusableSupplementaryView(ofKind:
-            kind, withReuseIdentifier: headerId, for: indexPath) as! PostPhotoHeader
+            kind, withReuseIdentifier: headerId, for: indexPath) as! PostPhotoCell
         
         if let select = selectedImage {
             if let index = images.index(of: select) {
