@@ -7,9 +7,20 @@ import UIKit
 
 class PostPhotoHeader: UICollectionViewCell {
     
+    let photo: UIImageView = {
+        let p = UIImageView()
+            p.clipsToBounds = true
+            p.contentMode = .scaleAspectFill
+        return p
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .blue
+        
+        addSubview(photo)
+        photo.anchors(top: topAnchor, toppad: 0, bottom: bottomAnchor,
+                      bottompad: 0, left: leftAnchor, leftpad: 0, right: rightAnchor,
+                      rightpad: 0, height: 0, width: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {
