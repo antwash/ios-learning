@@ -20,8 +20,8 @@ class ProfileHeader: UICollectionViewCell {
         return u
     }()
     
-    let profile_image: UIImageView = {
-        let p = UIImageView()
+    let profile_image: CustomImageView = {
+        let p = CustomImageView()
             p.backgroundColor = .white
         return p
     }()
@@ -80,19 +80,7 @@ class ProfileHeader: UICollectionViewCell {
     
     fileprivate func setProfileImage() {
         guard let image = user?.image_url else { return }
-        guard let url = URL(string: image) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let err = error {
-                print("Failed to set image:", err)
-                return
-            }
-            
-            guard let data = data else { return }
-            DispatchQueue.main.async {
-                self.profile_image.image = UIImage(data: data)
-            }
-        }.resume()
+        profile_image.loadImage(url: image)
     }
     
     fileprivate func setUserStatsLabels() {

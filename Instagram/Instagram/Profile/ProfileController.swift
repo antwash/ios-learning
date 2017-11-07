@@ -6,33 +6,25 @@
 import UIKit
 import Firebase
 
-struct User {
-    let username: String
-    let image_url : String
-    
-    init(dic: [String: String]) {
-        self.username = dic["username"] ?? ""
-        self.image_url = dic["profile_url"] ?? ""
-    }
-}
-
 class ProfileController : UICollectionViewController {
 
     let cellId = "cellId"
     let headerId = "headerId"
     
+    var posts: [Post] = []
     var currentUser: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.backgroundColor = .white
-        collectionView?.register(UICollectionViewCell.self,
+        collectionView?.register(ProfileImageCell.self,
                                  forCellWithReuseIdentifier: cellId)
         collectionView?.register(ProfileHeader.self, forSupplementaryViewOfKind:
             UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear"), style: .plain,
                                                             target: self, action: #selector(userLogOut))
         getCurrentUser()
+        getCurrentUserOrderedPosts()
     }
     
     override func collectionView(_ collectionView: UICollectionView,
@@ -46,13 +38,14 @@ class ProfileController : UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView,
                                  numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return posts.count
     }
     
     override func collectionView(_ collectionView: UICollectionView,
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-            cell.backgroundColor = .red
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier:
+            cellId, for: indexPath) as! ProfileImageCell
+            cell.post = posts[indexPath.item]
         return cell
     }
     
@@ -80,6 +73,19 @@ class ProfileController : UICollectionViewController {
                 self.collectionView?.reloadData()
         }) { (error) in
             print("Failed to get user:", error)
+        }
+    }
+
+    fileprivate func getCurrentUserOrderedPosts() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let ref = Database.database().reference().child("posts").child(uid)
+        ref.queryOrdered(byChild: "creationDate").observe(.childAdded, with: { (snapshot) in
+            guard let values = snapshot.value as? [String:Any] else { return }
+            let post = Post(dictionary: values)
+            self.posts.append(post)
+            self.collectionView?.reloadData()
+        }) { (error) in
+            print("Failed fetching post:", error)
         }
     }
 }

@@ -32,11 +32,11 @@ class MainTabController : UITabBarController {
     }
     
     func configureUserProfile() {
-        let home = setUpTabController(unselected: #imageLiteral(resourceName: "home_unselected"), selected: #imageLiteral(resourceName: "home_selected"), controller: UIViewController())
+        let home = setUpTabController(unselected: #imageLiteral(resourceName: "home_unselected"), selected: #imageLiteral(resourceName: "home_selected"), controller:
+            HomeFeedController(collectionViewLayout: UICollectionViewFlowLayout()))
         let search = setUpTabController(unselected: #imageLiteral(resourceName: "search_unselected"), selected: #imageLiteral(resourceName: "search_selected"), controller: UIViewController())
-        let profile = setUpTabController(unselected: #imageLiteral(resourceName: "profile_unselected"), selected: #imageLiteral(resourceName: "profile_selected"),
-                                         controller: ProfileController(collectionViewLayout:
-                                            UICollectionViewFlowLayout()))
+        let profile = setUpTabController(unselected: #imageLiteral(resourceName: "profile_unselected"), selected: #imageLiteral(resourceName: "profile_selected"),controller:
+            ProfileController(collectionViewLayout: UICollectionViewFlowLayout()))
         let camera = setUpTabController(unselected: #imageLiteral(resourceName: "plus_unselected"), selected: nil, controller: UIViewController())
         let like = setUpTabController(unselected: #imageLiteral(resourceName: "like_unselected"), selected: #imageLiteral(resourceName: "like_selected"), controller: UIViewController())
         

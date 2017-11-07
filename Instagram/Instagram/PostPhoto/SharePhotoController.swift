@@ -20,7 +20,6 @@ class SharePhotoController: UIViewController {
         return c
     }()
     
-    
     let image: UIImageView = {
         let i = UIImageView()
             i.clipsToBounds = true
@@ -62,7 +61,6 @@ class SharePhotoController: UIViewController {
                      bottompad: 8, left: image.rightAnchor, leftpad: 8, right: container.rightAnchor,
                      rightpad: 8, height: 0, width: 0)
     }
-    
     
     fileprivate func writeToDatabase(image_url: String) {
         guard let image = selectedImage else { return }
