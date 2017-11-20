@@ -4,6 +4,7 @@
 //  Copyright © 2017 Anthony Washington. All rights reserved.
 
 import UIKit
+import Firebase
 
 extension UIColor {
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
@@ -23,5 +24,19 @@ extension UIView {
         if let right = right { self.rightAnchor.constraint(equalTo: right, constant: -rightpad).isActive = true }
         if height > 0 { self.heightAnchor.constraint(equalToConstant: height).isActive = true }
         if width > 0 { self.widthAnchor.constraint(equalToConstant: width).isActive = true }
+    }
+}
+
+extension Database {
+    static func fetchUserWithId(uid: String, completion: @escaping (User?, Error?) -> ()) {
+        Database.database().reference().child("users").child(uid).observeSingleEvent(of:
+            .value, with: { (snapshot) in
+                guard let values = snapshot.value as? [String: String] else { return }
+                let user = User(uid: uid, dic: values)
+                completion(user, nil)
+        }) { (error) in
+            print("Failed to get user:", error)
+            completion(nil, error)
+        }
     }
 }

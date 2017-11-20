@@ -65,14 +65,16 @@ class ProfileController : UICollectionViewController {
     
     fileprivate func getCurrentUser() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        Database.database().reference().child("users").child(uid).observeSingleEvent(
-            of: .value, with: { (snapshot) in
-                guard let values = snapshot.value as? [String: String] else { return }
-                self.currentUser = User(dic: values)
-                self.navigationItem.title = self.currentUser?.username
-                self.collectionView?.reloadData()
-        }) { (error) in
-            print("Failed to get user:", error)
+        Database.fetchUserWithId(uid: uid) { (user, error) in
+            if let err = error {
+                print("Failed fetching user:", err)
+                return
+            }
+            
+            guard let user = user else { return }
+            self.currentUser = user
+            self.navigationItem.title = self.currentUser?.username
+            self.collectionView?.reloadData()
         }
     }
 
@@ -81,8 +83,11 @@ class ProfileController : UICollectionViewController {
         let ref = Database.database().reference().child("posts").child(uid)
         ref.queryOrdered(byChild: "creationDate").observe(.childAdded, with: { (snapshot) in
             guard let values = snapshot.value as? [String:Any] else { return }
-            let post = Post(dictionary: values)
-            self.posts.append(post)
+            
+            guard let user = self.currentUser else { return }
+            let post = Post(user: user, dictionary: values)
+            
+            self.posts.insert(post, at: 0)
             self.collectionView?.reloadData()
         }) { (error) in
             print("Failed fetching post:", error)

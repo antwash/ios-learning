@@ -14,8 +14,8 @@ class HomeFeedController : UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getCurrentUserPosts()
         configureNavigationBar()
+        getCurrentUserTimeline()
         collectionView?.backgroundColor = .white
         collectionView?.register(HomeFeedCell.self,
                                  forCellWithReuseIdentifier: cellId)
@@ -42,14 +42,27 @@ class HomeFeedController : UICollectionViewController {
         navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "logo2"))
     }
     
-    fileprivate func getCurrentUserPosts() {
+    
+    fileprivate func getCurrentUserTimeline() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        let ref = Database.database().reference().child("posts").child(uid)
+        Database.fetchUserWithId(uid: uid) { (user, error) in
+            if let err = error {
+                print("Failed to get user:", err)
+                return
+            }
+            guard let user = user else { return }
+            self.fetchUserPosts(user: user)
+        }
+    }
+
+    fileprivate func fetchUserPosts(user: User) {
+        let ref = Database.database().reference().child("posts").child(user.uid)
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let values = snapshot.value as? [String:Any] else { return }
             values.forEach({ (key, value) in
                 guard let dictionary = value as? [String:Any] else { return }
-                let post = Post(dictionary: dictionary)
+                
+                let post = Post(user: user, dictionary: dictionary)
                 self.posts.append(post)
             })
             self.collectionView?.reloadData()
@@ -64,6 +77,7 @@ extension HomeFeedController : UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout
         collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 100)
+        let height = 44 + 8 + 8 + view.frame.width + 40 + 40
+        return CGSize(width: view.frame.width, height: height)
     }
 }
