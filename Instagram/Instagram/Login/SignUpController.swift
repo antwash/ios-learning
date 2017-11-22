@@ -1,4 +1,4 @@
-//  ViewController.swift
+//  SignUpController.swift
 //  Instagram
 //  Created by Anthony Washington on 10/30/17.
 //  Copyright © 2017 Anthony Washington. All rights reserved.

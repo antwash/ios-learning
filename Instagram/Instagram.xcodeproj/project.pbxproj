@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		428BD7E05AB0256AB692E70C /* Pods_Instagram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CE1FF29CB01EF2310C907F1 /* Pods_Instagram.framework */; };
 		B13D2C3F1FAAB8FE00CBDB8B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D2C3E1FAAB8FE00CBDB8B /* Extensions.swift */; };
+		B1582F1D1FC554F5006233C2 /* UserSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1582F1C1FC554F5006233C2 /* UserSearchController.swift */; };
+		B1582F1F1FC5556B006233C2 /* UserSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1582F1E1FC5556B006233C2 /* UserSearchCell.swift */; };
 		B17303B51FABC37700BF2D88 /* ProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17303B41FABC37700BF2D88 /* ProfileHeader.swift */; };
 		B17303B81FAC1A1A00BF2D88 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17303B71FAC1A1A00BF2D88 /* LoginController.swift */; };
 		B17303BA1FAC2E8D00BF2D88 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17303B91FAC2E8D00BF2D88 /* Constants.swift */; };
@@ -35,6 +37,8 @@
 		342A49D583F42A50E82C7A40 /* Pods-Instagram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram.release.xcconfig"; path = "Pods/Target Support Files/Pods-Instagram/Pods-Instagram.release.xcconfig"; sourceTree = "<group>"; };
 		78FE5EE411CCB7ED6E54BF42 /* Pods-Instagram.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Instagram/Pods-Instagram.debug.xcconfig"; sourceTree = "<group>"; };
 		B13D2C3E1FAAB8FE00CBDB8B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		B1582F1C1FC554F5006233C2 /* UserSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchController.swift; sourceTree = "<group>"; };
+		B1582F1E1FC5556B006233C2 /* UserSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchCell.swift; sourceTree = "<group>"; };
 		B17303B41FABC37700BF2D88 /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
 		B17303B71FAC1A1A00BF2D88 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		B17303B91FAC2E8D00BF2D88 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -77,6 +81,15 @@
 				342A49D583F42A50E82C7A40 /* Pods-Instagram.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		B1582F1B1FC55300006233C2 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				B1582F1E1FC5556B006233C2 /* UserSearchCell.swift */,
+				B1582F1C1FC554F5006233C2 /* UserSearchController.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		B17303B61FAC1A0C00BF2D88 /* Login */ = {
@@ -140,6 +153,7 @@
 		B1AF23771FA8483600CE81C5 /* Instagram */ = {
 			isa = PBXGroup;
 			children = (
+				B1582F1B1FC55300006233C2 /* Search */,
 				B1F631DC1FB0395B0042D2A0 /* Models */,
 				B17472F01FB158FE00556229 /* HomeFeed */,
 				B17303B61FAC1A0C00BF2D88 /* Login */,
@@ -309,6 +323,7 @@
 				B1A5FC851FAEB8EB004548CB /* PostPhotoCell.swift in Sources */,
 				B1AF237B1FA8483600CE81C5 /* SignUpController.swift in Sources */,
 				B17472F21FB1591700556229 /* HomeFeedController.swift in Sources */,
+				B1582F1F1FC5556B006233C2 /* UserSearchCell.swift in Sources */,
 				B1F631E41FB040C70042D2A0 /* CustomImageView.swift in Sources */,
 				B1F631DE1FB0396D0042D2A0 /* Post.swift in Sources */,
 				B1F631E21FB03BC30042D2A0 /* ProfileImageCell.swift in Sources */,
@@ -320,6 +335,7 @@
 				B1AF23791FA8483600CE81C5 /* AppDelegate.swift in Sources */,
 				B1F7D2C31FAB689B0096F30A /* ProfileController.swift in Sources */,
 				B17303B81FAC1A1A00BF2D88 /* LoginController.swift in Sources */,
+				B1582F1D1FC554F5006233C2 /* UserSearchController.swift in Sources */,
 				B17303BA1FAC2E8D00BF2D88 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
