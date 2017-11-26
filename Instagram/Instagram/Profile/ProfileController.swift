@@ -25,7 +25,7 @@ class ProfileController : UICollectionViewController {
             UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
         getCurrentUser()
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView,
                                  viewForSupplementaryElementOfKind kind: String,
                                  at indexPath: IndexPath) -> UICollectionReusableView {

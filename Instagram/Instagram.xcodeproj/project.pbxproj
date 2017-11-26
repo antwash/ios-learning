@@ -16,6 +16,7 @@
 		B17303BA1FAC2E8D00BF2D88 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17303B91FAC2E8D00BF2D88 /* Constants.swift */; };
 		B17472F21FB1591700556229 /* HomeFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17472F11FB1591700556229 /* HomeFeedController.swift */; };
 		B17472F41FB15B0800556229 /* HomeFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17472F31FB15B0800556229 /* HomeFeedCell.swift */; };
+		B1A087C01FCB6B03004142BD /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A087BF1FCB6B03004142BD /* CameraController.swift */; };
 		B1A58FFD1FAAC14C00303BEB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1A58FFC1FAAC14C00303BEB /* GoogleService-Info.plist */; };
 		B1A5FC831FAEB6C4004548CB /* PostPhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A5FC821FAEB6C4004548CB /* PostPhotoController.swift */; };
 		B1A5FC851FAEB8EB004548CB /* PostPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A5FC841FAEB8EB004548CB /* PostPhotoCell.swift */; };
@@ -44,6 +45,7 @@
 		B17303B91FAC2E8D00BF2D88 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B17472F11FB1591700556229 /* HomeFeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedController.swift; sourceTree = "<group>"; };
 		B17472F31FB15B0800556229 /* HomeFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedCell.swift; sourceTree = "<group>"; };
+		B1A087BF1FCB6B03004142BD /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 		B1A58FFC1FAAC14C00303BEB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B1A5FC821FAEB6C4004548CB /* PostPhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhotoController.swift; sourceTree = "<group>"; };
 		B1A5FC841FAEB8EB004548CB /* PostPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhotoCell.swift; sourceTree = "<group>"; };
@@ -122,6 +124,14 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		B1A087BE1FCB6AF1004142BD /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				B1A087BF1FCB6B03004142BD /* CameraController.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
 		B1A5FC811FAEB69A004548CB /* PostPhoto */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +163,7 @@
 		B1AF23771FA8483600CE81C5 /* Instagram */ = {
 			isa = PBXGroup;
 			children = (
+				B1A087BE1FCB6AF1004142BD /* Camera */,
 				B1582F1B1FC55300006233C2 /* Search */,
 				B1F631DC1FB0395B0042D2A0 /* Models */,
 				B17472F01FB158FE00556229 /* HomeFeed */,
@@ -332,6 +343,7 @@
 				B17472F41FB15B0800556229 /* HomeFeedCell.swift in Sources */,
 				B1A5FC831FAEB6C4004548CB /* PostPhotoController.swift in Sources */,
 				B1F7D2C51FAB696C0096F30A /* MainTabController.swift in Sources */,
+				B1A087C01FCB6B03004142BD /* CameraController.swift in Sources */,
 				B1AF23791FA8483600CE81C5 /* AppDelegate.swift in Sources */,
 				B1F7D2C31FAB689B0096F30A /* ProfileController.swift in Sources */,
 				B17303B81FAC1A1A00BF2D88 /* LoginController.swift in Sources */,

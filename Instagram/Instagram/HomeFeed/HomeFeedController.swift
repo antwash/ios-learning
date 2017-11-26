@@ -46,12 +46,16 @@ class HomeFeedController : UICollectionViewController {
             cellId, for: indexPath) as! HomeFeedCell
             cell.post = posts[indexPath.item]
         
-        return cell
+        return cell 
     }
     
     
     fileprivate func configureNavigationBar() {
         navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "logo2"))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "camera3"), style:
+            .plain, target: self, action: #selector(showCamera))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "send2"), style:
+            .plain, target: self, action: nil)
     }
     
     fileprivate func fetchAllPost() {
@@ -74,7 +78,7 @@ class HomeFeedController : UICollectionViewController {
     fileprivate func fetchFollowingUsersPost() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let ref = Database.database().reference().child("following").child(uid)
-        ref.observe(.value, with: { (snapshot) in
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             dictionary.forEach({ (key, value) in
                 Database.fetchUserWithId(uid: key, completion: { (user, error) in
@@ -119,6 +123,11 @@ class HomeFeedController : UICollectionViewController {
     @objc func refreshHomeFeed() {
         posts.removeAll()
         fetchAllPost()
+    }
+    
+    @objc func showCamera() {
+        let camera = CameraController()
+        present(camera, animated: true, completion: nil)
     }
 }
 

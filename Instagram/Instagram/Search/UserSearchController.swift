@@ -40,9 +40,9 @@ class UserSearchController: UICollectionViewController {
                           bottompad: 0, left: nav?.leftAnchor, leftpad: 8,
                           right: nav?.rightAnchor, rightpad: 8, height: 0, width: 0)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         searchBar.isHidden = false
     }
     
