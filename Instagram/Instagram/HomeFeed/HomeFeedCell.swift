@@ -27,7 +27,7 @@ class HomeFeedCell : UICollectionViewCell {
                     UIFont.systemFont(ofSize: 4)]))
             
             attributedText.append(NSAttributedString(string:
-                "1 week ago", attributes: [NSAttributedStringKey.font:
+                Date.timeAgo(dateObj: post.creationDate), attributes: [NSAttributedStringKey.font:
                     UIFont.systemFont(ofSize: 14), NSAttributedStringKey.foregroundColor:
                         UIColor.gray]))
             

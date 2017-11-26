@@ -82,6 +82,8 @@ class SharePhotoController: UIViewController {
                 return
             }
             self.dismiss(animated: true, completion: nil)
+            
+            NotificationCenter.default.post(name: UPDATE_FEED, object: nil)
         }
     }
     
@@ -104,6 +106,5 @@ class SharePhotoController: UIViewController {
             guard let image_url = metadata?.downloadURL()?.absoluteString else { return }
             self.writeToDatabase(image_url: image_url)
         }
-        
     }
 }

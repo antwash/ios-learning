@@ -10,3 +10,4 @@ let PSSD_REGEX = ""
 let USERNAME_REGEX = "^[a-zA-Z0-9._-]{3,}$"
 let BUTTON_ENABLED_BLUE = UIColor.rgb(red: 17, green: 154, blue: 237)
 let BUTTON_DISABLED_BLUE = UIColor.rgb(red: 149, green: 204, blue: 244)
+let UPDATE_FEED = NSNotification.Name(rawValue: "updateFeed")

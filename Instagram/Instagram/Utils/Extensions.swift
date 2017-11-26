@@ -12,6 +12,42 @@ extension UIColor {
     }
 }
 
+extension Date {
+    static func timeAgo(dateObj: Date) -> String {
+        let seconds = Int(Date().timeIntervalSince(dateObj))
+        let minute = 60
+        let hour = 60 * minute
+        let day = 24 * hour
+        let week = 7 * day
+        let month = 4 * week
+    
+        let quotient: Int
+        let unit: String
+        
+        if (seconds < minute) {
+            quotient = seconds
+            unit = "second"
+        } else if (seconds < hour) {
+            quotient = seconds / minute
+            unit = "min"
+        } else if (seconds < day) {
+            quotient = seconds / hour
+            unit = "hour"
+        } else if (seconds < week) {
+            quotient = seconds / day
+            unit = "day"
+        } else if (seconds < month) {
+            quotient = seconds / week
+            unit = "week"
+        } else {
+            quotient = seconds / month
+            unit = "month"
+        }
+        
+        return "\(quotient) \(unit)\(quotient == 1 ? "" : "s") ago"
+    }
+}
+
 extension UIView {
     func anchors(top: NSLayoutYAxisAnchor?, toppad: CGFloat, bottom: NSLayoutYAxisAnchor?, bottompad: CGFloat,
                  left: NSLayoutXAxisAnchor?, leftpad: CGFloat, right: NSLayoutXAxisAnchor?, rightpad: CGFloat,
