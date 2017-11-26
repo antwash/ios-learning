@@ -11,8 +11,10 @@ class ProfileController : UICollectionViewController {
     let cellId = "cellId"
     let headerId = "headerId"
     
+    var userId: String?
     var posts: [Post] = []
     var currentUser: User?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,10 +23,7 @@ class ProfileController : UICollectionViewController {
                                  forCellWithReuseIdentifier: cellId)
         collectionView?.register(ProfileHeader.self, forSupplementaryViewOfKind:
             UICollectionElementKindSectionHeader, withReuseIdentifier: headerId)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear"), style: .plain,
-                                                            target: self, action: #selector(userLogOut))
         getCurrentUser()
-        getCurrentUserOrderedPosts()
     }
     
     override func collectionView(_ collectionView: UICollectionView,
@@ -64,7 +63,13 @@ class ProfileController : UICollectionViewController {
     }
     
     fileprivate func getCurrentUser() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let uid = userId ?? (Auth.auth().currentUser?.uid ?? "")
+        
+        if (uid == Auth.auth().currentUser?.uid) {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "gear"), style:
+                .plain, target: self, action: #selector(userLogOut))
+        }
+        
         Database.fetchUserWithId(uid: uid) { (user, error) in
             if let err = error {
                 print("Failed fetching user:", err)
@@ -73,13 +78,13 @@ class ProfileController : UICollectionViewController {
             
             guard let user = user else { return }
             self.currentUser = user
-            self.navigationItem.title = self.currentUser?.username
             self.collectionView?.reloadData()
+            self.getCurrentUserOrderedPosts()
         }
     }
 
     fileprivate func getCurrentUserOrderedPosts() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let uid = currentUser?.uid else { return }
         let ref = Database.database().reference().child("posts").child(uid)
         ref.queryOrdered(byChild: "creationDate").observe(.childAdded, with: { (snapshot) in
             guard let values = snapshot.value as? [String:Any] else { return }

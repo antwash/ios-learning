@@ -7,9 +7,16 @@ import UIKit
 
 class UserSearchCell: UICollectionViewCell {
     
+    var user: User? {
+        didSet {
+            guard let user = user else { return }
+            name.text = user.username
+            profile.loadImage(url: user.image_url)
+        }
+    }
+    
     let profile: CustomImageView = {
         let p = CustomImageView()
-            p.backgroundColor = .blue
             p.contentMode = .scaleAspectFill
             p.clipsToBounds = true
         return p

@@ -4,6 +4,7 @@
 //  Copyright © 2017 Anthony Washington. All rights reserved.
 
 import UIKit
+import Firebase
 
 class ProfileHeader: UICollectionViewCell {
     
@@ -11,6 +12,7 @@ class ProfileHeader: UICollectionViewCell {
         didSet {
             setProfileImage()
             setUserStatsLabels()
+            setupEditFollowButton()
         }
     }
     
@@ -47,14 +49,12 @@ class ProfileHeader: UICollectionViewCell {
         return f
     }()
     
-    let edit: UIButton = {
+    lazy var editFollow: UIButton = {
         let e = UIButton(type: .system)
             e.layer.borderWidth = 1
             e.layer.cornerRadius = 3
-            e.setTitleColor(.black, for: .normal)
-            e.setTitle("Edit Profile", for: .normal)
-            e.layer.borderColor = UIColor.lightGray.cgColor
             e.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+            e.addTarget(self, action: #selector(editProfileOrFollow), for: .touchUpInside)
         return e
     }()
     
@@ -81,6 +81,26 @@ class ProfileHeader: UICollectionViewCell {
     fileprivate func setProfileImage() {
         guard let image = user?.image_url else { return }
         profile_image.loadImage(url: image)
+    }
+    
+    fileprivate func setupEditFollowButton() {
+        guard let currentuser = Auth.auth().currentUser?.uid else { return }
+        guard let userId = user?.uid else { return }
+        
+        if (currentuser == userId) {
+            editFollow.setTitleColor(.black, for: .normal)
+            editFollow.setTitle("Edit Profile", for: .normal)
+            editFollow.layer.borderColor = UIColor.lightGray.cgColor
+        } else {
+            // check if following
+            let ref = Database.database().reference().child("following").child(currentuser).child(userId)
+            ref.observe(.value, with: { (snapshot) in
+                if let value = snapshot.value as? Int, value == 1 { self.setupUnFollowStyle() }
+                else { self.setupFollowStyle() }
+            }, withCancel: { (error) in
+                print("Error getting following list:", error)
+            })
+        }
     }
     
     fileprivate func setUserStatsLabels() {
@@ -139,12 +159,12 @@ class ProfileHeader: UICollectionViewCell {
             stackView.distribution = .fillEqually
         
         addSubview(stackView)
-        addSubview(edit)
+        addSubview(editFollow)
         
         stackView.anchors(top: topAnchor, toppad: 12, bottom: nil, bottompad: 0,
                           left: profile_image.rightAnchor, leftpad: 12, right: rightAnchor,
                           rightpad: 12, height: 50, width: 0)
-        edit.anchors(top: post.bottomAnchor, toppad: 2, bottom: nil, bottompad: 0,
+        editFollow.anchors(top: post.bottomAnchor, toppad: 2, bottom: nil, bottompad: 0,
                      left: post.leftAnchor, leftpad: 0, right: following.rightAnchor,
                      rightpad: 0, height: 25, width: 0)
     }
@@ -162,6 +182,52 @@ class ProfileHeader: UICollectionViewCell {
         userName.anchors(top: profile_image.bottomAnchor, toppad: 8, bottom: grid.topAnchor,
                          bottompad: 8, left: leftAnchor, leftpad: 16, right: rightAnchor,
                          rightpad: 12, height: 0, width: 0)
+    }
+    
+    fileprivate func setupUnFollowStyle() {
+        editFollow.backgroundColor = .white
+        editFollow.setTitleColor(.black, for: .normal)
+        editFollow.setTitle("Unfollow", for: .normal)
+        editFollow.layer.borderColor = UIColor.lightGray.cgColor
+    }
+    
+    fileprivate func setupFollowStyle() {
+        editFollow.setTitle("Follow", for: .normal)
+        editFollow.backgroundColor = BUTTON_ENABLED_BLUE
+        editFollow.setTitleColor(.white, for: .normal)
+        editFollow.layer.borderColor = UIColor(white: 0, alpha: 0.2).cgColor
+    }
+    
+    @objc func editProfileOrFollow() {
+        guard let currentuser = Auth.auth().currentUser?.uid else { return }
+        guard let userId = user?.uid else { return }
+        
+        if (currentuser == userId) {
+            print("EDIT PROFILE")
+        } else {
+            // unfollow user
+            if (editFollow.titleLabel?.text == "Unfollow") {
+                let ref = Database.database().reference().child("following").child(currentuser).child(userId)
+                ref.removeValue(completionBlock: { (error, ref) in
+                    if let err = error {
+                        print("Error unfollowing user:", err)
+                        return
+                    }
+                    self.setupFollowStyle()
+                })
+            } else {
+                // follow user
+                let values = [userId: 1]
+                let ref = Database.database().reference().child("following").child(currentuser)
+                ref.updateChildValues(values, withCompletionBlock: { (error, ref) in
+                    if let err = error {
+                        print("Failed to follow user:", err)
+                        return
+                    }
+                    self.setupUnFollowStyle()
+                })
+            }
+        }
     }
     
     override init(frame: CGRect) {
