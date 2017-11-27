@@ -18,6 +18,8 @@
 		B17472F41FB15B0800556229 /* HomeFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17472F31FB15B0800556229 /* HomeFeedCell.swift */; };
 		B1A087C01FCB6B03004142BD /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A087BF1FCB6B03004142BD /* CameraController.swift */; };
 		B1A087C21FCB8F28004142BD /* PreviewPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A087C11FCB8F28004142BD /* PreviewPhotoView.swift */; };
+		B1A087C41FCBB844004142BD /* CustomAnimationPresentor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A087C31FCBB844004142BD /* CustomAnimationPresentor.swift */; };
+		B1A087C61FCBBF46004142BD /* CustomAnimationDismisser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A087C51FCBBF46004142BD /* CustomAnimationDismisser.swift */; };
 		B1A58FFD1FAAC14C00303BEB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1A58FFC1FAAC14C00303BEB /* GoogleService-Info.plist */; };
 		B1A5FC831FAEB6C4004548CB /* PostPhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A5FC821FAEB6C4004548CB /* PostPhotoController.swift */; };
 		B1A5FC851FAEB8EB004548CB /* PostPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A5FC841FAEB8EB004548CB /* PostPhotoCell.swift */; };
@@ -48,6 +50,8 @@
 		B17472F31FB15B0800556229 /* HomeFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeedCell.swift; sourceTree = "<group>"; };
 		B1A087BF1FCB6B03004142BD /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 		B1A087C11FCB8F28004142BD /* PreviewPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewPhotoView.swift; sourceTree = "<group>"; };
+		B1A087C31FCBB844004142BD /* CustomAnimationPresentor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationPresentor.swift; sourceTree = "<group>"; };
+		B1A087C51FCBBF46004142BD /* CustomAnimationDismisser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimationDismisser.swift; sourceTree = "<group>"; };
 		B1A58FFC1FAAC14C00303BEB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B1A5FC821FAEB6C4004548CB /* PostPhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhotoController.swift; sourceTree = "<group>"; };
 		B1A5FC841FAEB8EB004548CB /* PostPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhotoCell.swift; sourceTree = "<group>"; };
@@ -130,6 +134,8 @@
 			isa = PBXGroup;
 			children = (
 				B1A087BF1FCB6B03004142BD /* CameraController.swift */,
+				B1A087C31FCBB844004142BD /* CustomAnimationPresentor.swift */,
+				B1A087C51FCBBF46004142BD /* CustomAnimationDismisser.swift */,
 				B1A087C11FCB8F28004142BD /* PreviewPhotoView.swift */,
 			);
 			path = Camera;
@@ -332,6 +338,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1A087C41FCBB844004142BD /* CustomAnimationPresentor.swift in Sources */,
 				B1F631E01FB03AE30042D2A0 /* User.swift in Sources */,
 				B1C42E051FAFB77B001B6AAE /* SharePhotoController.swift in Sources */,
 				B1A5FC851FAEB8EB004548CB /* PostPhotoCell.swift in Sources */,
@@ -348,6 +355,7 @@
 				B1A5FC831FAEB6C4004548CB /* PostPhotoController.swift in Sources */,
 				B1F7D2C51FAB696C0096F30A /* MainTabController.swift in Sources */,
 				B1A087C01FCB6B03004142BD /* CameraController.swift in Sources */,
+				B1A087C61FCBBF46004142BD /* CustomAnimationDismisser.swift in Sources */,
 				B1AF23791FA8483600CE81C5 /* AppDelegate.swift in Sources */,
 				B1F7D2C31FAB689B0096F30A /* ProfileController.swift in Sources */,
 				B17303B81FAC1A1A00BF2D88 /* LoginController.swift in Sources */,
