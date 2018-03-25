@@ -7,5 +7,6 @@ target 'Podcasts-Clone' do
 
   # Pods for Podcasts-Clone
   pod 'Alamofire'
+  pod 'SDWebImage'
 
 end

@@ -25,8 +25,9 @@ class SearchController: UITableViewController {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
     }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+
+    override func tableView(_ tableView: UITableView,
+                            heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 132
     }
         
@@ -43,7 +44,6 @@ class SearchController: UITableViewController {
         return cell
     }
 }
-
 
 extension SearchController : UISearchBarDelegate {
     

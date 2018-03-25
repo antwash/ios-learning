@@ -4,28 +4,32 @@
 //  Copyright © 2018 Anthony Washington. All rights reserved.
 
 import UIKit
+import SDWebImage
 
 class SearchCell: UITableViewCell {
-    
+
     var podcast: Podcast? {
         didSet {
             guard let podcast = podcast else { return }
             trackName.text = podcast.trackName
             artistName.text = podcast.artistName
+            episodeCount.text = "\(podcast.trackCount ?? 0) Episodes"
+
+            guard let url = URL(string: podcast.artworkUrl600 ?? "") else { return }
+            podcastImage.sd_setImage(with: url, completed: nil)
         }
     }
     
     let trackName: UILabel = {
         let t = UILabel()
-            t.font = UIFont.boldSystemFont(ofSize: 17)
-            t.numberOfLines = 0
+            t.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+            t.numberOfLines = 2
         return t
     }()
     
     let artistName: UILabel = {
         let a = UILabel()
             a.font = UIFont.systemFont(ofSize: 16)
-            a.numberOfLines = 0
         return a
     }()
 
@@ -33,36 +37,34 @@ class SearchCell: UITableViewCell {
         let e = UILabel()
             e.font = UIFont.systemFont(ofSize: 14)
             e.textColor = .darkGray
-            e.text = "50 episodes"
         return e
     }()
     
     let podcastImage: UIImageView = {
         let p = UIImageView()
-            p.image = #imageLiteral(resourceName: "appicon")
         return p
     }()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        addSubview(podcastImage)
-        addSubview(trackName)
-        addSubview(artistName)
-        addSubview(episodeCount)
+        let stackView = UIStackView(arrangedSubviews: [trackName,
+                                                       artistName,
+                                                       episodeCount])
+            stackView.spacing = 5
+            stackView.axis = .vertical
         
-        podcastImage.anchor(top: topAnchor, topPad: 8, bottom: nil,
+        addSubview(podcastImage)
+        addSubview(stackView)
+        
+        podcastImage.anchor(top: topAnchor, topPad: 16, bottom: nil,
                             bottomPad: 0, left: leftAnchor, leftPad: 8,
                             right: nil, rightPad: 0, height: 100, width: 100)
-        trackName.anchor(top: podcastImage.topAnchor, topPad: 4, bottom: nil,
+        stackView.anchor(top: nil, topPad: 0, bottom: nil,
                          bottomPad: 0, left: podcastImage.rightAnchor, leftPad: 8,
                          right: rightAnchor, rightPad: 8, height: 0, width: 0)
-        artistName.anchor(top: trackName.bottomAnchor, topPad: 4, bottom: nil,
-                          bottomPad: 0, left: trackName.leftAnchor, leftPad: 0,
-                          right: rightAnchor, rightPad: 8, height: 0, width: 0)
-        episodeCount.anchor(top: artistName.bottomAnchor, topPad: 4, bottom: nil,
-                            bottomPad: 0, left: artistName.leftAnchor, leftPad: 0,
-                            right: rightAnchor, rightPad: 8, height: 0, width: 0)
+        stackView.centerYAnchor.constraint(equalTo: podcastImage.centerYAnchor).isActive = true
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
