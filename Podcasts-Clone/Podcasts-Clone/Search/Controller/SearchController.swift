@@ -11,10 +11,7 @@ class SearchController: UITableViewController {
     let cellId = "podcastCellId"
     let searchController = UISearchController(searchResultsController: nil)
 
-    let podcast = [
-        Podcast(title: "Work hard, you'll become an iOS dev", creatorName: "Anthony Washington"),
-        Podcast(title: "Being black in Portland", creatorName: "Anthony D. Washington")
-    ]
+    var podcast : [Podcast] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +36,7 @@ class SearchController: UITableViewController {
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId,
                                                  for: indexPath)
-            cell.textLabel?.text = podcast[indexPath.row].title
+            cell.textLabel?.text = podcast[indexPath.row].trackName ?? ""
             cell.imageView?.image = #imageLiteral(resourceName: "appicon")
             cell.textLabel?.numberOfLines = -1
         return cell
@@ -50,6 +47,41 @@ class SearchController: UITableViewController {
 extension SearchController : UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print("Typed text:", searchText)
+        let url = "https://itunes.apple.com/search"
+        let parameters = ["term" : searchText,
+                          "media": "podcast"]
+        
+        Alamofire.request(url, method: .get, parameters:
+            parameters, encoding: URLEncoding.default, headers: nil).responseData { (dataResponse) in
+                
+            if let err = dataResponse.error {
+                print("ERROR: failed to fetch info from: \(url)" +
+                      "\n" + err.localizedDescription)
+            }
+                
+            guard let data = dataResponse.data else { return }
+             do {
+                let results = try  JSONDecoder().decode(SearchResults.self, from: data)
+                self.podcast = results.results
+                self.tableView.reloadData()
+              } catch let err {
+                print("Error: failed to decode data:", err)
+           }
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
