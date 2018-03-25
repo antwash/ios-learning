@@ -14,9 +14,12 @@
 		B188908D206739B7002EEB7B /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B188908C206739B7002EEB7B /* SearchController.swift */; };
 		B188909220673AF3002EEB7B /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B188909120673AF3002EEB7B /* Podcast.swift */; };
 		B188909420673B33002EEB7B /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B188909320673B33002EEB7B /* SearchCell.swift */; };
+		FC58E32669E8EAADA360BED9 /* Pods_Podcasts_Clone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8BC108B8A252F76EAB2CF19 /* Pods_Podcasts_Clone.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		13ECBF6EEA1B3B49E9B8F25C /* Pods-Podcasts-Clone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Podcasts-Clone.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Podcasts-Clone/Pods-Podcasts-Clone.debug.xcconfig"; sourceTree = "<group>"; };
+		4E4B5998C029C2C449EABEA5 /* Pods-Podcasts-Clone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Podcasts-Clone.release.xcconfig"; path = "Pods/Target Support Files/Pods-Podcasts-Clone/Pods-Podcasts-Clone.release.xcconfig"; sourceTree = "<group>"; };
 		B18890712067026F002EEB7B /* Podcasts-Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Podcasts-Clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B18890742067026F002EEB7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B188907B2067026F002EEB7B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -26,6 +29,7 @@
 		B188908C206739B7002EEB7B /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		B188909120673AF3002EEB7B /* Podcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
 		B188909320673B33002EEB7B /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		D8BC108B8A252F76EAB2CF19 /* Pods_Podcasts_Clone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Podcasts_Clone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +37,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC58E32669E8EAADA360BED9 /* Pods_Podcasts_Clone.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		94E5147D412B3DF16301C5BE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				13ECBF6EEA1B3B49E9B8F25C /* Pods-Podcasts-Clone.debug.xcconfig */,
+				4E4B5998C029C2C449EABEA5 /* Pods-Podcasts-Clone.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		964F2D001A39461E0CD6BFC9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D8BC108B8A252F76EAB2CF19 /* Pods_Podcasts_Clone.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B18890682067026F002EEB7B = {
 			isa = PBXGroup;
 			children = (
 				B18890732067026F002EEB7B /* Podcasts-Clone */,
 				B18890722067026F002EEB7B /* Products */,
+				94E5147D412B3DF16301C5BE /* Pods */,
+				964F2D001A39461E0CD6BFC9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -133,9 +157,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B18890832067026F002EEB7B /* Build configuration list for PBXNativeTarget "Podcasts-Clone" */;
 			buildPhases = (
+				7D806511FAA85D1D20D52E21 /* [CP] Check Pods Manifest.lock */,
 				B188906D2067026F002EEB7B /* Sources */,
 				B188906E2067026F002EEB7B /* Frameworks */,
 				B188906F2067026F002EEB7B /* Resources */,
+				00A74FE98497F27B4FE9D20A /* [CP] Embed Pods Frameworks */,
+				C4A265EB54FB704D9717F3DD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -191,6 +218,60 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		00A74FE98497F27B4FE9D20A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Podcasts-Clone/Pods-Podcasts-Clone-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Podcasts-Clone/Pods-Podcasts-Clone-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7D806511FAA85D1D20D52E21 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Podcasts-Clone-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C4A265EB54FB704D9717F3DD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Podcasts-Clone/Pods-Podcasts-Clone-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B188906D2067026F002EEB7B /* Sources */ = {
@@ -328,6 +409,7 @@
 		};
 		B18890842067026F002EEB7B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13ECBF6EEA1B3B49E9B8F25C /* Pods-Podcasts-Clone.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -344,6 +426,7 @@
 		};
 		B18890852067026F002EEB7B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4E4B5998C029C2C449EABEA5 /* Pods-Podcasts-Clone.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

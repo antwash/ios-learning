@@ -4,6 +4,7 @@
 //  Copyright © 2018 Anthony Washington. All rights reserved.
 
 import UIKit
+import Alamofire
 
 class SearchController: UITableViewController {
     
