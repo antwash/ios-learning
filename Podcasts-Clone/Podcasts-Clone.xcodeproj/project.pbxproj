@@ -15,6 +15,7 @@
 		B188909220673AF3002EEB7B /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B188909120673AF3002EEB7B /* Podcast.swift */; };
 		B188909420673B33002EEB7B /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B188909320673B33002EEB7B /* SearchCell.swift */; };
 		B190D446206771A5000A2939 /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B190D445206771A5000A2939 /* SearchResults.swift */; };
+		B190D44A20679649000A2939 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B190D44920679649000A2939 /* ApiClient.swift */; };
 		FC58E32669E8EAADA360BED9 /* Pods_Podcasts_Clone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8BC108B8A252F76EAB2CF19 /* Pods_Podcasts_Clone.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		B188909120673AF3002EEB7B /* Podcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
 		B188909320673B33002EEB7B /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		B190D445206771A5000A2939 /* SearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
+		B190D44920679649000A2939 /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		D8BC108B8A252F76EAB2CF19 /* Pods_Podcasts_Clone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Podcasts_Clone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -90,6 +92,7 @@
 				B18890862067080A002EEB7B /* Favorites */,
 				B18890802067026F002EEB7B /* Info.plist */,
 				B188908A206708D8002EEB7B /* MainTabBarController.swift */,
+				B190D44920679649000A2939 /* ApiClient.swift */,
 			);
 			path = "Podcasts-Clone";
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B190D44A20679649000A2939 /* ApiClient.swift in Sources */,
 				B188908B206708D8002EEB7B /* MainTabBarController.swift in Sources */,
 				B188909420673B33002EEB7B /* SearchCell.swift in Sources */,
 				B188908D206739B7002EEB7B /* SearchController.swift in Sources */,

@@ -4,7 +4,6 @@
 //  Copyright © 2018 Anthony Washington. All rights reserved.
 
 import UIKit
-import Alamofire
 
 class SearchController: UITableViewController {
     
@@ -45,43 +44,16 @@ class SearchController: UITableViewController {
 
 
 extension SearchController : UISearchBarDelegate {
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.podcast = []
+        self.tableView.reloadData()
+    }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let url = "https://itunes.apple.com/search"
-        let parameters = ["term" : searchText,
-                          "media": "podcast"]
-        
-        Alamofire.request(url, method: .get, parameters:
-            parameters, encoding: URLEncoding.default, headers: nil).responseData { (dataResponse) in
-                
-            if let err = dataResponse.error {
-                print("ERROR: failed to fetch info from: \(url)" +
-                      "\n" + err.localizedDescription)
-            }
-                
-            guard let data = dataResponse.data else { return }
-             do {
-                let results = try  JSONDecoder().decode(SearchResults.self, from: data)
-                self.podcast = results.results
-                self.tableView.reloadData()
-              } catch let err {
-                print("Error: failed to decode data:", err)
-           }
+        ApiClient.shared.fetchPodCasts(podcast: searchText) { (podcasts) in
+            self.podcast = podcasts
+            self.tableView.reloadData()
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
