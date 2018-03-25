@@ -16,6 +16,7 @@
 		B188909420673B33002EEB7B /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B188909320673B33002EEB7B /* SearchCell.swift */; };
 		B190D446206771A5000A2939 /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B190D445206771A5000A2939 /* SearchResults.swift */; };
 		B190D44A20679649000A2939 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B190D44920679649000A2939 /* ApiClient.swift */; };
+		B190D44D206804F0000A2939 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B190D44C206804F0000A2939 /* UIViewExtension.swift */; };
 		FC58E32669E8EAADA360BED9 /* Pods_Podcasts_Clone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8BC108B8A252F76EAB2CF19 /* Pods_Podcasts_Clone.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		B188909320673B33002EEB7B /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		B190D445206771A5000A2939 /* SearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
 		B190D44920679649000A2939 /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
+		B190D44C206804F0000A2939 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		D8BC108B8A252F76EAB2CF19 /* Pods_Podcasts_Clone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Podcasts_Clone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -124,6 +126,7 @@
 		B188908920670830002EEB7B /* Configs */ = {
 			isa = PBXGroup;
 			children = (
+				B190D44B2068046D000A2939 /* Extensions */,
 				B18890742067026F002EEB7B /* AppDelegate.swift */,
 				B188907D2067026F002EEB7B /* LaunchScreen.storyboard */,
 				B188907B2067026F002EEB7B /* Assets.xcassets */,
@@ -154,6 +157,14 @@
 				B188908C206739B7002EEB7B /* SearchController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		B190D44B2068046D000A2939 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B190D44C206804F0000A2939 /* UIViewExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,6 +301,7 @@
 				B188908D206739B7002EEB7B /* SearchController.swift in Sources */,
 				B188909220673AF3002EEB7B /* Podcast.swift in Sources */,
 				B190D446206771A5000A2939 /* SearchResults.swift in Sources */,
+				B190D44D206804F0000A2939 /* UIViewExtension.swift in Sources */,
 				B18890752067026F002EEB7B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -17,7 +17,7 @@ class SearchController: UITableViewController {
         
         tableView.alwaysBounceVertical = false
         tableView.tableFooterView = UIView(frame: .zero)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(SearchCell.self, forCellReuseIdentifier: cellId)
         
         searchController.searchBar.delegate = self
         searchController.dimsBackgroundDuringPresentation = false
@@ -26,6 +26,10 @@ class SearchController: UITableViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 132
+    }
+        
     override func tableView(_ tableView: UITableView,
                             numberOfRowsInSection section: Int) -> Int {
         return podcast.count
@@ -34,10 +38,8 @@ class SearchController: UITableViewController {
     override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId,
-                                                 for: indexPath)
-            cell.textLabel?.text = podcast[indexPath.row].trackName ?? ""
-            cell.imageView?.image = #imageLiteral(resourceName: "appicon")
-            cell.textLabel?.numberOfLines = -1
+                                                 for: indexPath) as! SearchCell
+            cell.podcast = self.podcast[indexPath.row]
         return cell
     }
 }
