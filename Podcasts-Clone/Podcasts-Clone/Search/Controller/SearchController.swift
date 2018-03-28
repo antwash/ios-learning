@@ -15,6 +15,7 @@ class SearchController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        definesPresentationContext = true
         tableView.alwaysBounceVertical = false
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.register(SearchCell.self, forCellReuseIdentifier: cellId)
@@ -24,6 +25,20 @@ class SearchController: UITableViewController {
 
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let message = UILabel()
+            message.textAlignment = .center
+            message.text = "Search for your favorite podcast"
+            message.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+            message.textColor = .purple
+        return message
+    }
+
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        let center = self.tableView.frame.height / 2
+        return (self.podcast.count == 0) ? center : 0
     }
 
     override func tableView(_ tableView: UITableView,
@@ -42,6 +57,12 @@ class SearchController: UITableViewController {
                                                  for: indexPath) as! SearchCell
             cell.podcast = self.podcast[indexPath.row]
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let episodesController = EpisodesController()
+            episodesController.podcast = self.podcast[indexPath.row]
+        navigationController?.pushViewController(episodesController, animated: true)
     }
 }
 
