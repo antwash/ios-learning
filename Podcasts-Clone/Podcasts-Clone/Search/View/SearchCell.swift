@@ -15,7 +15,7 @@ class SearchCell: UITableViewCell {
             artistName.text = podcast.artistName
             episodeCount.text = "\(podcast.trackCount ?? 0) Episodes"
 
-            guard let url = URL(string: podcast.artworkUrl600 ?? "") else { return }
+            let url = URL(string: podcast.artworkUrl600)
             podcastImage.sd_setImage(with: url, completed: nil)
         }
     }
@@ -64,7 +64,6 @@ class SearchCell: UITableViewCell {
                          bottomPad: 0, left: podcastImage.rightAnchor, leftPad: 8,
                          right: rightAnchor, rightPad: 8, height: 0, width: 0)
         stackView.centerYAnchor.constraint(equalTo: podcastImage.centerYAnchor).isActive = true
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

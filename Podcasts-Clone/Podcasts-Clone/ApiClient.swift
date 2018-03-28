@@ -5,6 +5,7 @@
 
 import Foundation
 import Alamofire
+import FeedKit
 
 class ApiClient {
     
@@ -32,5 +33,29 @@ class ApiClient {
                 print("Error: failed to decode data:", err)
             }
         }
+    }
+
+    func parseRSSFeed(feedUrl: String, completionHandler: @escaping ([Episode]) -> ()) {
+        let _url = feedUrl.secureHttps()
+        guard let url = URL(string: _url) else { return }
+
+        var episodes: [Episode] = []
+        let parser = FeedParser(URL: url)
+
+        parser?.parseAsync(result: { (results) in
+            if let err = results.error {
+                print("Error parsing RSS feed:", err)
+                return
+            }
+
+            guard let feed = results.rssFeed else { return }
+            let tempImageURL = feed.iTunes?.iTunesImage?.attributes?.href
+
+            feed.items?.forEach({ (item) in
+                episodes.append(Episode(item: item, image: tempImageURL!))
+            })
+
+            completionHandler(episodes)
+        })
     }
 }

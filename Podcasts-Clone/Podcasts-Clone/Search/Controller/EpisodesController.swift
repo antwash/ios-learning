@@ -4,11 +4,11 @@
 //  Copyright © 2018 Anthony Washington. All rights reserved.
 
 import UIKit
-import FeedKit
 
 class EpisodesController : UITableViewController {
     
     let cellId = "episodeCellId"
+
     var episodes: [Episode] = []
     var podcast: Podcast? { didSet { self.parseRssFeed() } }
     
@@ -16,7 +16,11 @@ class EpisodesController : UITableViewController {
         super.viewDidLoad()
         navigationItem.title = "Episodes"
         tableView.tableFooterView = UIView(frame: .zero)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(EpisodeCell.self, forCellReuseIdentifier: cellId)
+    }
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 132
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -24,33 +28,18 @@ class EpisodesController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-            cell.textLabel?.text = self.episodes[indexPath.row].title
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! EpisodeCell
+            cell.feedEpisode = self.episodes[indexPath.row]
         return cell
     }
     
-    
     fileprivate func parseRssFeed() {
-        guard let _url = podcast?.feedUrl else { return }
-        
-        let httpsUrl = _url.contains("https") ? _url :
-            _url.replacingOccurrences(of: "http", with: "https")
-        
-        guard let url = URL(string: httpsUrl) else { return }
-        let parser = FeedParser(URL: url)
-        
-        parser?.parseAsync(result: { (results) in
-            switch results {
-            case let .rss(feed):
-                feed.items?.forEach({ (item) in
-                    self.episodes.append(Episode(title: item.title))
-                })
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-                break
-            default: break
+        guard let url = podcast?.feedUrl else { return }
+        ApiClient.shared.parseRSSFeed(feedUrl: url) { (episodes) in
+            self.episodes = episodes
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
-        })
+        }
     }
 }

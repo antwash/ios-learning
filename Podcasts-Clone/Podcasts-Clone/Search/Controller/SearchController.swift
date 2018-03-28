@@ -76,7 +76,9 @@ extension SearchController : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         ApiClient.shared.fetchPodCasts(podcast: searchText) { (podcasts) in
             self.podcast = podcasts
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
 }
