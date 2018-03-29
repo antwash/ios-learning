@@ -33,6 +33,15 @@ class EpisodesController : UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let podcastPlayer = PlayerView()
+            podcastPlayer.frame = view.frame
+            podcastPlayer.episode = self.episodes[indexPath.row]
+    
+        let window = UIApplication.shared.keyWindow
+            window?.addSubview(podcastPlayer)
+    }
+    
     fileprivate func parseRssFeed() {
         guard let url = podcast?.feedUrl else { return }
         ApiClient.shared.parseRSSFeed(feedUrl: url) { (episodes) in

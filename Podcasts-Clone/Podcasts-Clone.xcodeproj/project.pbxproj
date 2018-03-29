@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B176866A206C7FFE00EFDB10 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1768669206C7FFE00EFDB10 /* PlayerView.swift */; };
 		B18890752067026F002EEB7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18890742067026F002EEB7B /* AppDelegate.swift */; };
 		B188907C2067026F002EEB7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B188907B2067026F002EEB7B /* Assets.xcassets */; };
 		B188907F2067026F002EEB7B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B188907D2067026F002EEB7B /* LaunchScreen.storyboard */; };
@@ -27,6 +28,7 @@
 /* Begin PBXFileReference section */
 		13ECBF6EEA1B3B49E9B8F25C /* Pods-Podcasts-Clone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Podcasts-Clone.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Podcasts-Clone/Pods-Podcasts-Clone.debug.xcconfig"; sourceTree = "<group>"; };
 		4E4B5998C029C2C449EABEA5 /* Pods-Podcasts-Clone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Podcasts-Clone.release.xcconfig"; path = "Pods/Target Support Files/Pods-Podcasts-Clone/Pods-Podcasts-Clone.release.xcconfig"; sourceTree = "<group>"; };
+		B1768669206C7FFE00EFDB10 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		B18890712067026F002EEB7B /* Podcasts-Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Podcasts-Clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B18890742067026F002EEB7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B188907B2067026F002EEB7B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -75,6 +77,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B1768668206C726C00EFDB10 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				B1768669206C7FFE00EFDB10 /* PlayerView.swift */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
 		B18890682067026F002EEB7B = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +108,7 @@
 			children = (
 				B188908920670830002EEB7B /* Configs */,
 				B188908720670812002EEB7B /* Search */,
+				B1768668206C726C00EFDB10 /* Player */,
 				B18890802067026F002EEB7B /* Info.plist */,
 				B188908A206708D8002EEB7B /* MainTabBarController.swift */,
 				B190D44920679649000A2939 /* ApiClient.swift */,
@@ -302,6 +313,7 @@
 				B190D453206B3F71000A2939 /* EpisodeCell.swift in Sources */,
 				B190D451206B395F000A2939 /* Episode.swift in Sources */,
 				B188908D206739B7002EEB7B /* SearchController.swift in Sources */,
+				B176866A206C7FFE00EFDB10 /* PlayerView.swift in Sources */,
 				B188909220673AF3002EEB7B /* Podcast.swift in Sources */,
 				B190D446206771A5000A2939 /* SearchResults.swift in Sources */,
 				B190D44D206804F0000A2939 /* UIViewExtension.swift in Sources */,

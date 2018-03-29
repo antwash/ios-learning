@@ -13,16 +13,10 @@ struct Episode {
     let imageURL: String
 
     init(item: RSSFeedItem, image: String) {
-
-        let desc = item.description?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        let final = desc.replacingOccurrences(of: "<[^>]+>",
-                                              with: "",
-                                              options: .regularExpression, range: nil)
         let imageurl = item.iTunes?.iTunesImage?.attributes?.href?.secureHttps() ?? ""
-
         self.title = item.title ?? ""
         self.pubDate = item.pubDate ?? Date()
-        self.description = final
+        self.description = item.description?.replaceHTML() ?? ""
         self.imageURL = (imageurl == "") ? image.secureHttps() : imageurl
     }
 }
