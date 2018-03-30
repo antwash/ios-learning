@@ -5,13 +5,14 @@
 
 import UIKit
 import SDWebImage
+import AVKit
 
 class PlayerView: UIView {
     
     var episode: Episode! {
         didSet {
             let url = URL(string: episode.imageURL)
-
+            startPlayingAudio()
             title.text = episode.title
             author.text = episode.authorName
             podCastImage.sd_setImage(with: url, completed: nil)
@@ -70,19 +71,23 @@ class PlayerView: UIView {
     }()
     
     let fastForwardButton : UIButton = {
-        let f = UIButton()
+        let f = UIButton(type: .system)
+            f.tintColor = .black
             f.setImage(#imageLiteral(resourceName: "fastforward15"), for: .normal)
         return f
     }()
     
     let playButton : UIButton = {
-        let p = UIButton()
+        let p = UIButton(type: .system)
+            p.tintColor = .black
             p.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            p.addTarget(self, action: #selector(playPauseController), for: .touchUpInside)
         return p
     }()
     
     let rewindButton : UIButton = {
-        let r = UIButton()
+        let r = UIButton(type: .system)
+            r.tintColor = .black
             r.setImage(#imageLiteral(resourceName: "rewind15"), for: .normal)
         return r
     }()
@@ -104,6 +109,11 @@ class PlayerView: UIView {
         return m
     }()
     
+    let audioPlayer : AVPlayer = {
+        let a = AVPlayer()
+            a.automaticallyWaitsToMinimizeStalling = false
+        return a
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -175,6 +185,24 @@ class PlayerView: UIView {
             v.anchor(top: nil, topPad: 0, bottom: nil, bottomPad: 0, left: view.leftAnchor,
                  leftPad: 0, right: view.rightAnchor, rightPad: 0, height: 34, width: 0)
         return view
+    }
+    
+    fileprivate func startPlayingAudio() {
+        guard let url = URL(string: episode.audioURL) else { return }
+        let playerItem = AVPlayerItem(url: url)
+        audioPlayer.replaceCurrentItem(with: playerItem)
+        audioPlayer.play()
+        playButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+    }
+    
+    @objc func playPauseController() {
+        if audioPlayer.timeControlStatus == .playing {
+            audioPlayer.pause()
+            playButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+        } else {
+            audioPlayer.play()
+            playButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+        }
     }
     
     @objc func removePlayer() { self.removeFromSuperview() }
