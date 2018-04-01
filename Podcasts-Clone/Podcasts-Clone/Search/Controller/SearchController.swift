@@ -25,6 +25,8 @@ class SearchController: UITableViewController {
 
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+        
+        searchBar(searchController.searchBar, textDidChange: "Voong")
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

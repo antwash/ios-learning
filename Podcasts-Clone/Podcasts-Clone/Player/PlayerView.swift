@@ -12,23 +12,28 @@ class PlayerView: UIView {
     var episode: Episode! {
         didSet {
             let url = URL(string: episode.imageURL)
-            startPlayingAudio()
+
             title.text = episode.title
             author.text = episode.authorName
             podCastImage.sd_setImage(with: url, completed: nil)
+
+            startPlayingAudio()
         }
     }
     
+    lazy var podCastImage : UIImageView = {
+        let p = UIImageView()
+            p.layer.cornerRadius = 5
+            p.clipsToBounds = true
+            p.transform = smallerAnimation
+        return p
+    }()
+
     let dismiss : UIButton = {
         let d = UIButton(type: .system)
             d.setTitle("Dismiss", for: .normal)
             d.addTarget(self, action: #selector(removePlayer), for: .touchUpInside)
         return d
-    }()
-    
-    let podCastImage : UIImageView = {
-        let p = UIImageView()
-        return p
     }()
     
     let title : UILabel = {
@@ -65,7 +70,7 @@ class PlayerView: UIView {
         let e = UILabel()
             e.textAlignment = .right
             e.font = UIFont.systemFont(ofSize: 14)
-            e.text = "99:99:99"
+            e.text = "--:--:--"
             e.textColor = .darkGray
         return e
     }()
@@ -77,7 +82,7 @@ class PlayerView: UIView {
         return f
     }()
     
-    let playButton : UIButton = {
+    let playPauseButton : UIButton = {
         let p = UIButton(type: .system)
             p.tintColor = .black
             p.setImage(#imageLiteral(resourceName: "play"), for: .normal)
@@ -114,6 +119,26 @@ class PlayerView: UIView {
             a.automaticallyWaitsToMinimizeStalling = false
         return a
     }()
+
+    override func didMoveToSuperview() {
+        // observer for audio start
+        let times = [NSValue(time: CMTimeMake(1, 3))]
+        audioPlayer.addBoundaryTimeObserver(forTimes: times, queue: .main) {
+            self.playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            self.performImageAnimation(transform: self.largerAnimation)
+        }
+        
+        // observer for audio time tracker
+        audioPlayer.addPeriodicTimeObserver(forInterval:
+            CMTimeMake(1, 2), queue: .main) { (time) in
+                let currentTime = CMTimeGetSeconds(time)
+                let endTime = self.audioPlayer.currentItem?.duration
+                self.runTime.text = time.formatTime()
+                self.endTime.text = endTime?.formatTime()
+                self.timeSlider.value = Float(currentTime /
+                    CMTimeGetSeconds(endTime ?? CMTimeMake(0, 0)))
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -158,7 +183,7 @@ class PlayerView: UIView {
     
     fileprivate func setPlayControlsStackView() -> UIStackView {
         rewindButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
-        playButton.widthAnchor.constraint(equalToConstant: 54).isActive = true
+        playPauseButton.widthAnchor.constraint(equalToConstant: 54).isActive = true
         fastForwardButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
         
         /* added blanks UIViews for spacing between controls
@@ -167,7 +192,7 @@ class PlayerView: UIView {
         */
         let controlsStackView = UIStackView(arrangedSubviews: [UIView(),
                                                                rewindButton,
-                                                               UIView(), playButton,
+                                                               UIView(), playPauseButton,
                                                                UIView(), fastForwardButton, UIView()])
             controlsStackView.distribution = .equalCentering
         return controlsStackView
@@ -192,20 +217,33 @@ class PlayerView: UIView {
         let playerItem = AVPlayerItem(url: url)
         audioPlayer.replaceCurrentItem(with: playerItem)
         audioPlayer.play()
-        playButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+    }
+
+    fileprivate let largerAnimation = CGAffineTransform.identity
+    fileprivate let smallerAnimation = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    fileprivate func performImageAnimation(transform: CGAffineTransform ) {
+        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping:
+            0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.podCastImage.transform = transform
+        }, completion: nil)
     }
     
     @objc func playPauseController() {
         if audioPlayer.timeControlStatus == .playing {
             audioPlayer.pause()
-            playButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
-        } else {
+            playPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            performImageAnimation(transform: smallerAnimation)
+        } else if audioPlayer.timeControlStatus == .paused {
             audioPlayer.play()
-            playButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            performImageAnimation(transform: largerAnimation)
         }
     }
     
-    @objc func removePlayer() { self.removeFromSuperview() }
+    @objc func removePlayer() {
+        self.removeFromSuperview()
+        audioPlayer.pause()
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
