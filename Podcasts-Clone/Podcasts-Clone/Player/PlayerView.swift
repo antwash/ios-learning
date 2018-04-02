@@ -55,6 +55,7 @@ class PlayerView: UIView {
     
     let timeSlider : UISlider = {
         let t = UISlider()
+            t.addTarget(self, action: #selector(timeChanged), for: .valueChanged)
         return t
     }()
     
@@ -79,6 +80,7 @@ class PlayerView: UIView {
         let f = UIButton(type: .system)
             f.tintColor = .black
             f.setImage(#imageLiteral(resourceName: "fastforward15"), for: .normal)
+            f.addTarget(self, action: #selector(performFastForward), for: .touchUpInside)
         return f
     }()
     
@@ -94,6 +96,7 @@ class PlayerView: UIView {
         let r = UIButton(type: .system)
             r.tintColor = .black
             r.setImage(#imageLiteral(resourceName: "rewind15"), for: .normal)
+            r.addTarget(self, action: #selector(performRewind), for: .touchUpInside)
         return r
     }()
     
@@ -105,6 +108,8 @@ class PlayerView: UIView {
     
     let volumeSlider : UISlider = {
         let v = UISlider()
+            v.value = 1
+            v.addTarget(self, action: #selector(volumeChanged), for: .valueChanged)
         return v
     }()
     
@@ -116,6 +121,7 @@ class PlayerView: UIView {
     
     let audioPlayer : AVPlayer = {
         let a = AVPlayer()
+            a.volume = 1
             a.automaticallyWaitsToMinimizeStalling = false
         return a
     }()
@@ -124,18 +130,21 @@ class PlayerView: UIView {
         // observer for audio start
         let times = [NSValue(time: CMTimeMake(1, 3))]
         audioPlayer.addBoundaryTimeObserver(forTimes: times, queue: .main) {
-            self.playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
-            self.performImageAnimation(transform: self.largerAnimation)
+            [weak self] in
+            self?.playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            self?.performImageAnimation(transform:
+                self?.largerAnimation ?? CGAffineTransform())
         }
         
         // observer for audio time tracker
         audioPlayer.addPeriodicTimeObserver(forInterval:
-            CMTimeMake(1, 2), queue: .main) { (time) in
+            CMTimeMake(1, 2), queue: .main) {
+                [weak self] (time) in
                 let currentTime = CMTimeGetSeconds(time)
-                let endTime = self.audioPlayer.currentItem?.duration
-                self.runTime.text = time.formatTime()
-                self.endTime.text = endTime?.formatTime()
-                self.timeSlider.value = Float(currentTime /
+                let endTime = self?.audioPlayer.currentItem?.duration
+                self?.runTime.text = time.formatTime()
+                self?.endTime.text = endTime?.formatTime()
+                self?.timeSlider.value = Float(currentTime /
                     CMTimeGetSeconds(endTime ?? CMTimeMake(0, 0)))
         }
     }
@@ -240,10 +249,31 @@ class PlayerView: UIView {
         }
     }
     
-    @objc func removePlayer() {
-        self.removeFromSuperview()
-        audioPlayer.pause()
+    fileprivate func goToTime(time: Int64) {
+        let time = CMTimeMake(time, 1)
+        let goToTime = CMTimeAdd(audioPlayer.currentTime(), time)
+        audioPlayer.seek(to: goToTime)
     }
+    
+    @objc func performRewind() { goToTime(time: -15) }
+    @objc func performFastForward() { goToTime(time: 15)}
+
+    @objc func timeChanged() {
+        guard let endTime = audioPlayer.currentItem?.duration else { return }
+        let percent = timeSlider.value
+        let endTimeSeconds = CMTimeGetSeconds(endTime)
+        
+        let goToTimeSeconds = Float64(percent) * endTimeSeconds
+        let goToTime = CMTimeMakeWithSeconds(goToTimeSeconds, Int32(NSEC_PER_SEC))
+        audioPlayer.seek(to: goToTime)
+    }
+    
+    @objc func volumeChanged() {
+        audioPlayer.volume = volumeSlider.value
+    }
+    
+    @objc func removePlayer() { self.removeFromSuperview() }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

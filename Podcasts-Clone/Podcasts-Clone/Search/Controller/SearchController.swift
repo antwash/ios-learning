@@ -25,8 +25,6 @@ class SearchController: UITableViewController {
 
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        
-        searchBar(searchController.searchBar, textDidChange: "Voong")
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -74,8 +72,9 @@ extension SearchController : UISearchBarDelegate {
         self.podcast = []
         self.tableView.reloadData()
     }
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text else { return }
         ApiClient.shared.fetchPodCasts(podcast: searchText) { (podcasts) in
             self.podcast = podcasts
             DispatchQueue.main.async {

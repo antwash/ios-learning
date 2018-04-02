@@ -34,12 +34,27 @@ class EpisodesController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let podcastPlayer = PlayerView()
             podcastPlayer.frame = view.frame
             podcastPlayer.episode = self.episodes[indexPath.row]
     
         let window = UIApplication.shared.keyWindow
             window?.addSubview(podcastPlayer)
+    }
+    
+    
+    override func tableView(_ tableView: UITableView,
+                            viewForFooterInSection section: Int) -> UIView? {
+        let activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+            activityView.color = .darkGray
+            activityView.startAnimating()
+        return activityView
+    }
+    
+    override func tableView(_ tableView: UITableView,
+                            heightForFooterInSection section: Int) -> CGFloat {
+        return episodes.isEmpty ? 250 : 0
     }
     
     fileprivate func parseRssFeed() {
