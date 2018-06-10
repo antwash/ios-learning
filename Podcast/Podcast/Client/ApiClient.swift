@@ -4,7 +4,6 @@
 //  Copyright © 2018 Anthony Washington. All rights reserved.
 
 import Alamofire
-import Foundation
 
 class ApiClient {
     static let shared = ApiClient()

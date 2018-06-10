@@ -4,6 +4,7 @@
 //  Copyright © 2018 Anthony Washington. All rights reserved.
 
 import UIKit
+import SDWebImage
 
 class PodcastCell: UITableViewCell {
     
@@ -13,7 +14,19 @@ class PodcastCell: UITableViewCell {
             guard let podcast = podcast else { return }
             podcastName.text = podcast.trackName ?? ""
             podcastArtistName.text = podcast.artistName ?? ""
-            podcastEpisodeCount.text = "70 episodes"
+            
+            let count = podcast.trackCount ?? 2
+            let episode = (count > 1) ? "episodes" : "episode"
+            podcastEpisodeCount.text = "\(count) \(episode)"
+
+            if let link = podcast.artworkUrl600 {
+                let url = URL(string: link)
+                podcastArtWork.sd_setIndicatorStyle(.gray)
+                podcastArtWork.sd_setShowActivityIndicatorView(true)
+                podcastArtWork.sd_setImage(with: url, completed: nil)
+            } else {
+                podcastArtWork.image = #imageLiteral(resourceName: "appicon")
+            }
         }
     }
     
@@ -39,7 +52,6 @@ class PodcastCell: UITableViewCell {
     
     let podcastArtWork : UIImageView = {
         let p = UIImageView()
-            p.image = #imageLiteral(resourceName: "appicon")
             p.contentMode = .scaleAspectFill
         return p
     }()

@@ -39,6 +39,8 @@ class PodcastsController: UITableViewController {
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId,
                                                  for: indexPath) as! PodcastCell
+            cell.podcastArtWork.image = nil
+            cell.podcastArtWork.sd_cancelCurrentImageLoad()
             cell.podcast = podcasts[indexPath.item]
         return cell
     }
