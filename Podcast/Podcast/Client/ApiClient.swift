@@ -4,6 +4,7 @@
 //  Copyright © 2018 Anthony Washington. All rights reserved.
 
 import Alamofire
+import FeedKit
 
 class ApiClient {
     static let shared = ApiClient()
@@ -32,4 +33,33 @@ class ApiClient {
             }
         }
     }
+    
+    func fetchEpisodes(link : String, completionHandler: @escaping ([Episode]) -> ()) {
+        var episodes : [Episode] = []
+        if !link.isEmpty {
+            guard let url = URL(string: link) else { return }
+            let parser = FeedParser(URL: url)
+            
+            parser?.parseAsync(queue: DispatchQueue.global(qos:
+                .userInitiated), result: { (result) in
+                
+                guard let feed = result.rssFeed, result.isSuccess else {
+                    print("Error getting rssFeed: ", result.error ?? "")
+                    return
+                }
+                
+                feed.items?.forEach({ (feedItem) in
+                    episodes.append(Episode(feedItem: feedItem))
+                })
+
+                completionHandler(episodes)
+            })
+        }
+        completionHandler([])
+    }
 }
+
+
+
+
+

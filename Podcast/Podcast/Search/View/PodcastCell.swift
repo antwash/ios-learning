@@ -15,11 +15,11 @@ class PodcastCell: UITableViewCell {
             podcastName.text = podcast.trackName ?? ""
             podcastArtistName.text = podcast.artistName ?? ""
             
-            let count = podcast.trackCount ?? 2
-            let episode = (count > 1) ? "episodes" : "episode"
+            let count = podcast.trackCount ?? 0
+            let episode = (count > 1 || count == 0) ? "episodes" : "episode"
             podcastEpisodeCount.text = "\(count) \(episode)"
 
-            if let link = podcast.artworkUrl600 {
+            if let link = podcast.artworkUrl600, !link.isEmpty {
                 let url = URL(string: link)
                 podcastArtWork.sd_setIndicatorStyle(.gray)
                 podcastArtWork.sd_setShowActivityIndicatorView(true)
@@ -52,6 +52,7 @@ class PodcastCell: UITableViewCell {
     
     let podcastArtWork : UIImageView = {
         let p = UIImageView()
+            p.clipsToBounds = true
             p.contentMode = .scaleAspectFill
         return p
     }()
@@ -62,7 +63,6 @@ class PodcastCell: UITableViewCell {
         let stackView = UIStackView(arrangedSubviews: [podcastName,
                                                        podcastArtistName,
                                                        podcastEpisodeCount])
-        
             stackView.spacing = 5
             stackView.axis = .vertical
             stackView.distribution = .fillProportionally
@@ -71,7 +71,7 @@ class PodcastCell: UITableViewCell {
         addSubview(stackView)
         
         podcastArtWork.anchors(top: topAnchor, topPad: 16, bottom: nil,
-                               bottomPad: 0, left: leftAnchor, leftPad: 8,
+                               bottomPad: 0, left: leftAnchor, leftPad: 16,
                                right: nil, rightPad: 0, height: 100, width: 100)
         stackView.anchors(top: topAnchor, topPad: 24, bottom: nil,
                           bottomPad: 0, left: podcastArtWork.rightAnchor,

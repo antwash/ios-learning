@@ -4,6 +4,7 @@
 //  Copyright © 2018 Anthony Washington. All rights reserved.
 
 struct SearchResults : Decodable {
+
     let resultCount : Int
     let results : [Podcast]
 }

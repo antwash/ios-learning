@@ -21,6 +21,7 @@ class PodcastsController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        definesPresentationContext = true
         searchController.searchBar.delegate = self
         searchController.dimsBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
@@ -43,6 +44,14 @@ class PodcastsController: UITableViewController {
             cell.podcastArtWork.sd_cancelCurrentImageLoad()
             cell.podcast = podcasts[indexPath.item]
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let episodesController = EpisodesController()
+            episodesController.podcast = self.podcasts[indexPath.item]
+        navigationController?.pushViewController(episodesController, animated: true)
     }
 }
 
