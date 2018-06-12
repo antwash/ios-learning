@@ -5,6 +5,15 @@
 
 import UIKit
 
+extension String {
+    func replaceHTML() -> String {
+        let text = self.trimmingCharacters(in: .whitespacesAndNewlines)
+        return text.replacingOccurrences(of: "<[^>]+>", with:
+            "", options: .regularExpression, range: nil)
+    }
+}
+
+
 extension UIView {
     func anchors(top: NSLayoutYAxisAnchor?, topPad: CGFloat,
                  bottom: NSLayoutYAxisAnchor?, bottomPad: CGFloat,

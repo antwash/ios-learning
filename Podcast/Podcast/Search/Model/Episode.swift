@@ -8,8 +8,14 @@ import FeedKit
 struct Episode {
     
     let title : String
+    let pubDate : Date
+    let imageURL : String
+    let description : String
     
-    init(feedItem: RSSFeedItem) {
+    init(feedItem: RSSFeedItem, parentImage: String) {
         self.title = feedItem.title ?? ""
+        self.pubDate = feedItem.pubDate ?? Date()
+        self.description = feedItem.description ?? ""
+        self.imageURL = feedItem.iTunes?.iTunesImage?.attributes?.href ?? parentImage
     }
 }

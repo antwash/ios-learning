@@ -35,7 +35,8 @@ class EpisodesController : UITableViewController {
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId,
                                                  for: indexPath) as! EpisodeCell
-            cell.imageURL = podcast.artworkUrl600
+            cell.episodeArtwork.image = nil
+            cell.episodeArtwork.sd_cancelCurrentImageLoad()
             cell.episode = episodes[indexPath.item]
         return cell
     }
@@ -47,7 +48,9 @@ class EpisodesController : UITableViewController {
     
     fileprivate func fetchEpisodes() {
         let link = podcast.feedUrl ?? ""
-        ApiClient.shared.fetchEpisodes(link: link) { (episodes) in
+        let img = podcast.artworkUrl600 ?? ""
+
+        ApiClient.shared.fetchEpisodes(link: link, img: img) { (episodes) in
             DispatchQueue.main.async {
                 self.episodes = episodes
                 self.tableView.reloadData()
