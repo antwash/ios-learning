@@ -34,7 +34,8 @@ class ApiClient {
         }
     }
     
-    func fetchEpisodes(link : String, img: String, completionHandler: @escaping ([Episode]) -> ()) {
+    func fetchEpisodes(link : String, img: String,
+                       completionHandler: @escaping ([Episode]) -> ()) {
         var episodes : [Episode] = []
         if !link.isEmpty {
             guard let url = URL(string: link) else { return }
@@ -49,7 +50,8 @@ class ApiClient {
                 }
                 
                 feed.items?.forEach({ (feedItem) in
-                    episodes.append(Episode(feedItem: feedItem, parentImage: img))
+                    episodes.append(Episode(feedItem: feedItem,
+                                            parentImage: img))
                 })
 
                 completionHandler(episodes)

@@ -44,6 +44,7 @@ class EpisodesController : UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let audioPlayer = AudioPlayerController()
+            audioPlayer.episode = episodes[indexPath.item]
         navigationController?.present(audioPlayer, animated: true, completion: nil)
     }
     
@@ -55,7 +56,7 @@ class EpisodesController : UITableViewController {
     fileprivate func fetchEpisodes() {
         let link = podcast.feedUrl ?? ""
         let img = podcast.artworkUrl600 ?? ""
-
+        
         ApiClient.shared.fetchEpisodes(link: link, img: img) { (episodes) in
             DispatchQueue.main.async {
                 self.episodes = episodes

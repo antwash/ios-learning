@@ -6,13 +6,22 @@
 import UIKit
 
 class AudioPlayerController : UIViewController {
+    
     let space1 = UIView()
     let space2 = UIView()
-    let space3 = UIView()
-    let space4 = UIView()
-    let space5 = UIView()
-    let space6 = UIView()
-    let space7 = UIView()
+    
+    var episode : Episode! {
+        didSet {
+            
+            let url = URL(string: episode.imageURL)
+            podcastImage.sd_setIndicatorStyle(.gray)
+            podcastImage.sd_setShowActivityIndicatorView(true)
+            podcastImage.sd_setImage(with: url, completed: nil)
+            
+            podcastTitleLabel.text = episode.title
+            podcastArtistLabel.text = episode.author
+        }
+    }
     
     let dismissButton : UIButton = {
         let d = UIButton(type: .system)
@@ -20,12 +29,12 @@ class AudioPlayerController : UIViewController {
             d.setTitleColor(.black, for: .normal)
             d.setTitle("Dismiss", for: .normal)
             d.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+            d.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
         return d
     }()
     
     let podcastImage : UIImageView = {
         let p = UIImageView()
-            p.image = #imageLiteral(resourceName: "appicon")
             p.clipsToBounds = true
             p.layer.cornerRadius = 10
             p.contentMode = .scaleAspectFill
@@ -58,15 +67,14 @@ class AudioPlayerController : UIViewController {
         let p = UILabel()
             p.numberOfLines = 2
             p.textAlignment = .center
-            p.text = "My Experience in Computer Science Vs Real world"
             p.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         return p
     }()
     
     let podcastArtistLabel : UILabel = {
         let p = UILabel()
+            p.numberOfLines = 1
             p.textColor = .purple
-            p.text = "Brian Voong"
             p.textAlignment = .center
             p.font = UIFont.boldSystemFont(ofSize: 15)
         return p
@@ -114,79 +122,67 @@ class AudioPlayerController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let headerStackView = setUpPlayerHeader()
+        setupAnchors()
+        
         let volumStackView = setupVolumeController()
- 
+        let playControlsStackView = setupPlayControls()
+        let timerSliderStackView = UIStackView(arrangedSubviews: [space1, timeSlider, space2])
+        let timerLabelStackView = UIStackView(arrangedSubviews: [startTimeLabel, endTimeLabel])
+            timerLabelStackView.distribution = .fillEqually
+        let descriptionStackView = UIStackView(arrangedSubviews: [podcastTitleLabel, podcastArtistLabel])
+            descriptionStackView.axis = .vertical
+        
         let stackView = UIStackView(arrangedSubviews: [
-            headerStackView, space7, volumStackView
+            dismissButton, podcastImage, timerSliderStackView, timerLabelStackView,
+            descriptionStackView, playControlsStackView, volumStackView
         ])
             stackView.axis = .vertical
+            stackView.spacing = 5
         
         view.backgroundColor = .white
         view.addSubview(stackView)
-        
+
         stackView.anchors(top: view.safeAreaLayoutGuide.topAnchor, topPad: 8,
                           bottom: view.safeAreaLayoutGuide.bottomAnchor,
                           bottomPad: 8, left: view.leftAnchor, leftPad: 24,
                           right: view.rightAnchor, rightPad: 24, height: 0, width: 0)
     }
     
-    fileprivate func setupHeaderAnchors() {
+    fileprivate func setupPlayControls() -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [
+            UIView(), rewind15Button, UIView(),
+            playButton, UIView(), fastforward15Button, UIView()
+        ])
+            stackView.distribution = .equalCentering
+
+        return stackView
+    }
+
+    fileprivate func setupVolumeController() -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [
+            muteVolumeIcon,volumeSlider, maxVolumeIcon
+        ])
+
+        return stackView
+    }
+    
+    fileprivate func setupAnchors() {
         space1.widthAnchor.constraint(equalToConstant: 12).isActive = true
         space2.widthAnchor.constraint(equalToConstant: 12).isActive = true
-        space4.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        space5.widthAnchor.constraint(equalToConstant: 20).isActive = true
-
+        
+        dismissButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         podcastImage.heightAnchor.constraint(equalTo: podcastImage.widthAnchor,
-                                             multiplier: 0.9).isActive = true
-    }
-    
-    fileprivate func setUpPlayerHeader() -> UIStackView {
-        setupHeaderAnchors()
-
-        let playControlsStackView = setupPlayControls()
-        let timerStackView = UIStackView(arrangedSubviews: [space1, timeSlider, space2])
-        let timesStackView = UIStackView(arrangedSubviews: [startTimeLabel, space3, endTimeLabel])
-        let descriptionStack = UIStackView(arrangedSubviews: [podcastTitleLabel, podcastArtistLabel])
-        let descriptionStackView = UIStackView(arrangedSubviews: [space4, descriptionStack, space5])
+                                             multiplier: 1.0).isActive = true
+        startTimeLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
-        timesStackView.distribution = .fillEqually
-        descriptionStack.axis = .vertical
+        podcastTitleLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 50).isActive = true
+        podcastArtistLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
-        let stackView = UIStackView(arrangedSubviews: [
-            dismissButton, podcastImage, timerStackView, timesStackView,
-            descriptionStackView, playControlsStackView
-        ])
-            stackView.axis = .vertical
-            stackView.spacing = 15
-
-        return stackView
-    }
-    
-    fileprivate func setupPlayControls() -> UIStackView {
-
-        rewind15Button.heightAnchor.constraint(equalTo: rewind15Button.widthAnchor,
-                                               multiplier: 0.7).isActive = true
-        let stackView = UIStackView(arrangedSubviews: [
-            rewind15Button, playButton, fastforward15Button
-        ])
-            stackView.spacing = 5
-            stackView.distribution = .fillEqually
-        
-        return stackView
-    }
-    
-    fileprivate func setupVolumeController() -> UIStackView {
         muteVolumeIcon.heightAnchor.constraint(equalToConstant: 30).isActive = true
         muteVolumeIcon.widthAnchor.constraint(equalToConstant: 30).isActive = true
         maxVolumeIcon.heightAnchor.constraint(equalToConstant: 30).isActive = true
         maxVolumeIcon.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        
-        let stackView = UIStackView(arrangedSubviews: [
-            muteVolumeIcon,volumeSlider, maxVolumeIcon
-        ])
-            stackView.spacing = 2
-        
-        return stackView
     }
+    
+    @objc func dismissView() { dismiss(animated: true, completion: nil) }
 }

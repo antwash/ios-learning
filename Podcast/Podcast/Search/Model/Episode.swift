@@ -9,11 +9,13 @@ struct Episode {
     
     let title : String
     let pubDate : Date
+    let author : String
     let imageURL : String
     let description : String
     
     init(feedItem: RSSFeedItem, parentImage: String) {
         self.title = feedItem.title ?? ""
+        self.author = feedItem.iTunes?.iTunesAuthor ?? ""
         self.pubDate = feedItem.pubDate ?? Date()
         self.description = feedItem.description ?? ""
         self.imageURL = feedItem.iTunes?.iTunesImage?.attributes?.href ?? parentImage
