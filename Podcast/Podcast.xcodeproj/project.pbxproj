@@ -18,6 +18,7 @@
 		034E3B3420CCCCFE0006787A /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034E3B3320CCCCFE0006787A /* Podcast.swift */; };
 		034E3B3620CCCE540006787A /* PodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034E3B3520CCCE540006787A /* PodcastCell.swift */; };
 		034E3B3920CCDD400006787A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034E3B3820CCDD400006787A /* Extensions.swift */; };
+		03A49BF920D0AB06001F573D /* AudioPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A49BF820D0AB06001F573D /* AudioPlayerController.swift */; };
 		03A6268720CE061D001058EB /* EpisodesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A6268620CE061D001058EB /* EpisodesController.swift */; };
 		03A6268920CE0B74001058EB /* EpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A6268820CE0B74001058EB /* EpisodeCell.swift */; };
 		03A6268B20CE0BC1001058EB /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A6268A20CE0BC1001058EB /* Episode.swift */; };
@@ -38,6 +39,7 @@
 		034E3B3320CCCCFE0006787A /* Podcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
 		034E3B3520CCCE540006787A /* PodcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastCell.swift; sourceTree = "<group>"; };
 		034E3B3820CCDD400006787A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		03A49BF820D0AB06001F573D /* AudioPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerController.swift; sourceTree = "<group>"; };
 		03A6268620CE061D001058EB /* EpisodesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesController.swift; sourceTree = "<group>"; };
 		03A6268820CE0B74001058EB /* EpisodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeCell.swift; sourceTree = "<group>"; };
 		03A6268A20CE0BC1001058EB /* Episode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 			children = (
 				034E3B2C20CCC6580006787A /* PodcastsController.swift */,
 				03A6268620CE061D001058EB /* EpisodesController.swift */,
+				03A49BF820D0AB06001F573D /* AudioPlayerController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				03A6268920CE0B74001058EB /* EpisodeCell.swift in Sources */,
 				0326862920CDD1DB0011CFB2 /* ApiClient.swift in Sources */,
 				034E3B1620CA3D000006787A /* AppDelegate.swift in Sources */,
+				03A49BF920D0AB06001F573D /* AudioPlayerController.swift in Sources */,
 				034E3B2F20CCC6880006787A /* FavoritesController.swift in Sources */,
 				034E3B3620CCCE540006787A /* PodcastCell.swift in Sources */,
 				034E3B3420CCCCFE0006787A /* Podcast.swift in Sources */,
@@ -438,7 +442,10 @@
 				DEVELOPMENT_TEAM = 767BA8E22K;
 				INFOPLIST_FILE = Podcast/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.antdwash.Podcast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -455,7 +462,10 @@
 				DEVELOPMENT_TEAM = 767BA8E22K;
 				INFOPLIST_FILE = Podcast/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.antdwash.Podcast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

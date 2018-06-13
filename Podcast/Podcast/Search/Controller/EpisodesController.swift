@@ -41,6 +41,12 @@ class EpisodesController : UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let audioPlayer = AudioPlayerController()
+        navigationController?.present(audioPlayer, animated: true, completion: nil)
+    }
+    
     override func tableView(_ tableView: UITableView,
                             heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 132
