@@ -29,6 +29,9 @@ class PodcastsController: UITableViewController {
         
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.register(PodcastCell.self, forCellReuseIdentifier: cellId)
+        
+        searchController.searchBar.text = "Voong"
+        searchBarSearchButtonClicked(searchController.searchBar)
     }
     
     override func tableView(_ tableView: UITableView,

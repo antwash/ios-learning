@@ -4,16 +4,17 @@
 //  Copyright © 2018 Anthony Washington. All rights reserved.
 
 import UIKit
+import AVKit
 
 class AudioPlayerController : UIViewController {
-    
-    let space1 = UIView()
-    let space2 = UIView()
     
     var episode : Episode! {
         didSet {
             
+            playEpisodeAudio()
+            
             let url = URL(string: episode.imageURL)
+            podcastImage.transform = smallerAnimation
             podcastImage.sd_setIndicatorStyle(.gray)
             podcastImage.sd_setShowActivityIndicatorView(true)
             podcastImage.sd_setImage(with: url, completed: nil)
@@ -23,13 +24,24 @@ class AudioPlayerController : UIViewController {
         }
     }
     
+    //MARK: - LET constant properties
+    
+    let space1 = UIView()
+    let space2 = UIView()
+    
+    let audioPlayer : AVPlayer = {
+        let a = AVPlayer()
+            a.automaticallyWaitsToMinimizeStalling = false
+        return a
+    }()
+    
     let dismissButton : UIButton = {
         let d = UIButton(type: .system)
             d.titleLabel?.textAlignment = .center
             d.setTitleColor(.black, for: .normal)
             d.setTitle("Dismiss", for: .normal)
             d.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
-            d.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
+            d.addTarget(self, action: #selector(dissmissAction), for: .touchUpInside)
         return d
     }()
     
@@ -65,7 +77,6 @@ class AudioPlayerController : UIViewController {
     
     let podcastTitleLabel : UILabel = {
         let p = UILabel()
-            p.numberOfLines = 2
             p.textAlignment = .center
             p.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         return p
@@ -73,7 +84,6 @@ class AudioPlayerController : UIViewController {
     
     let podcastArtistLabel : UILabel = {
         let p = UILabel()
-            p.numberOfLines = 1
             p.textColor = .purple
             p.textAlignment = .center
             p.font = UIFont.boldSystemFont(ofSize: 15)
@@ -90,7 +100,8 @@ class AudioPlayerController : UIViewController {
     let playButton : UIButton = {
         let p = UIButton(type: .system)
             p.tintColor = .black
-            p.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            p.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            p.addTarget(self, action: #selector(playPauseAction), for: .touchUpInside)
         return p
     }()
     
@@ -123,21 +134,21 @@ class AudioPlayerController : UIViewController {
         super.viewDidLoad()
         
         setupAnchors()
+        addPlayerObserver()
         
-        let volumStackView = setupVolumeController()
+        let volumeControlStackView = setupVolumeController()
         let playControlsStackView = setupPlayControls()
+        let playTimerLabelStackView = setupPlayTimeLabel()
+        let descriptionStackView = setupEpisodeDescription()
         let timerSliderStackView = UIStackView(arrangedSubviews: [space1, timeSlider, space2])
-        let timerLabelStackView = UIStackView(arrangedSubviews: [startTimeLabel, endTimeLabel])
-            timerLabelStackView.distribution = .fillEqually
-        let descriptionStackView = UIStackView(arrangedSubviews: [podcastTitleLabel, podcastArtistLabel])
-            descriptionStackView.axis = .vertical
-        
+
         let stackView = UIStackView(arrangedSubviews: [
-            dismissButton, podcastImage, timerSliderStackView, timerLabelStackView,
-            descriptionStackView, playControlsStackView, volumStackView
+            dismissButton, podcastImage, timerSliderStackView,
+            playTimerLabelStackView, descriptionStackView, playControlsStackView,
+            volumeControlStackView
         ])
             stackView.axis = .vertical
-            stackView.spacing = 5
+            stackView.spacing = 10
         
         view.backgroundColor = .white
         view.addSubview(stackView)
@@ -146,6 +157,33 @@ class AudioPlayerController : UIViewController {
                           bottom: view.safeAreaLayoutGuide.bottomAnchor,
                           bottomPad: 8, left: view.leftAnchor, leftPad: 24,
                           right: view.rightAnchor, rightPad: 24, height: 0, width: 0)
+    }
+    
+    //MARK: - Private functions
+    
+    fileprivate func playEpisodeAudio() {
+        guard let url = URL(string: episode.audioURL) else { return }
+        let playerItem = AVPlayerItem(url: url)
+        
+        audioPlayer.replaceCurrentItem(with: playerItem)
+        audioPlayer.play()
+    }
+    
+
+    fileprivate func setupPlayTimeLabel() -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [
+            startTimeLabel, endTimeLabel
+        ])
+            stackView.distribution = .fillEqually
+        return stackView
+    }
+    
+    fileprivate func setupEpisodeDescription() -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [
+            podcastTitleLabel, podcastArtistLabel
+        ])
+            stackView.axis = .vertical
+        return stackView
     }
     
     fileprivate func setupPlayControls() -> UIStackView {
@@ -175,7 +213,7 @@ class AudioPlayerController : UIViewController {
                                              multiplier: 1.0).isActive = true
         startTimeLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
-        podcastTitleLabel.heightAnchor.constraint(lessThanOrEqualToConstant: 50).isActive = true
+        podcastTitleLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         podcastArtistLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
         muteVolumeIcon.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -184,5 +222,37 @@ class AudioPlayerController : UIViewController {
         maxVolumeIcon.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
-    @objc func dismissView() { dismiss(animated: true, completion: nil) }
+    
+    fileprivate let largerAnimation = CGAffineTransform.identity
+    fileprivate let smallerAnimation = CGAffineTransform(scaleX: 0.7, y: 0.7)
+    fileprivate func performAnimation(transform : CGAffineTransform) {
+        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.podcastImage.transform = transform
+        })
+    }
+    
+    fileprivate func addPlayerObserver() {
+        let times = [ NSValue(time: CMTime(value: 1, timescale: 3)) ]
+        audioPlayer.addBoundaryTimeObserver(forTimes: times, queue: .main) {
+            self.performAnimation(transform: self.largerAnimation)
+        }
+    }
+    
+    //MARK: - Button action functions
+    
+    @objc func dissmissAction() { dismiss(animated: true, completion: nil) }
+    @objc func playPauseAction() {
+
+        switch audioPlayer.timeControlStatus {
+        case .paused:
+            audioPlayer.play()
+            playButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            performAnimation(transform: largerAnimation)
+            break
+        default:
+            audioPlayer.pause()
+            playButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            performAnimation(transform: smallerAnimation)
+        }
+    }
 }
