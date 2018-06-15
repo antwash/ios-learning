@@ -134,7 +134,8 @@ class AudioPlayerController : UIViewController {
         super.viewDidLoad()
         
         setupAnchors()
-        addPlayerObserver()
+        addPlayerPlayTimeObserver()
+        addPlayerStartPlayingObserver()
         
         let volumeControlStackView = setupVolumeController()
         let playControlsStackView = setupPlayControls()
@@ -226,15 +227,32 @@ class AudioPlayerController : UIViewController {
     fileprivate let largerAnimation = CGAffineTransform.identity
     fileprivate let smallerAnimation = CGAffineTransform(scaleX: 0.7, y: 0.7)
     fileprivate func performAnimation(transform : CGAffineTransform) {
-        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.podcastImage.transform = transform
         })
     }
     
-    fileprivate func addPlayerObserver() {
+    fileprivate func addPlayerStartPlayingObserver() {
         let times = [ NSValue(time: CMTime(value: 1, timescale: 3)) ]
         audioPlayer.addBoundaryTimeObserver(forTimes: times, queue: .main) {
             self.performAnimation(transform: self.largerAnimation)
+        }
+    }
+    
+    fileprivate func addPlayerPlayTimeObserver() {
+        audioPlayer.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale:
+            2), queue: .main) { (time) in    
+                let endTime = self.audioPlayer.currentItem?.duration
+                let currentSeconds = CMTimeGetSeconds(time)
+                let endTimeSeconds = CMTimeGetSeconds(endTime ??
+                    CMTime(value: 1, timescale: 1))
+                let percentageTime = currentSeconds / endTimeSeconds
+                
+
+                self.timeSlider.value = Float(percentageTime)
+                self.startTimeLabel.text = time.toDisplayString()
+                self.endTimeLabel.text = endTime?.toDisplayString()
         }
     }
     
