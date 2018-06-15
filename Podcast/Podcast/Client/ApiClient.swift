@@ -39,23 +39,21 @@ class ApiClient {
         var episodes : [Episode] = []
         if !link.isEmpty {
             guard let url = URL(string: link) else { return }
-            let parser = FeedParser(URL: url)
             
-            parser?.parseAsync(queue: DispatchQueue.global(qos:
-                .userInitiated), result: { (result) in
-                
-                guard let feed = result.rssFeed, result.isSuccess else {
-                    print("Error getting rssFeed: ", result.error ?? "")
-                    return
-                }
-                
-                feed.items?.forEach({ (feedItem) in
-                    episodes.append(Episode(feedItem: feedItem,
-                                            parentImage: img))
+            DispatchQueue.global(qos: .background).async {
+                let parser = FeedParser(URL: url)
+                parser?.parseAsync(result: { (result) in
+                    guard let feed = result.rssFeed, result.isSuccess else {
+                        print("Error getting rssFeed: ", result.error ?? "")
+                        return
+                    }
+                    feed.items?.forEach({ (feedItem) in
+                        episodes.append(Episode(feedItem: feedItem,
+                                                parentImage: img))
+                    })
+                    completionHandler(episodes)
                 })
-
-                completionHandler(episodes)
-            })
+            }
         }
         completionHandler([])
     }

@@ -32,6 +32,20 @@ class EpisodesController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView,
+                            heightForFooterInSection section: Int) -> CGFloat {
+        return episodes.count > 0 ? 0 : 250
+    }
+    
+    override func tableView(_ tableView: UITableView,
+                            viewForFooterInSection section: Int) -> UIView? {
+        
+        let activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+            activityView.color = .darkGray
+            activityView.startAnimating()
+        return activityView
+    }
+    
+    override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId,
                                                  for: indexPath) as! EpisodeCell

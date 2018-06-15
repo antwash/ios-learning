@@ -55,6 +55,7 @@ class AudioPlayerController : UIViewController {
     
     let timeSlider : UISlider = {
         let t = UISlider()
+            t.addTarget(self, action: #selector(changeTimeSlider), for: .valueChanged)
         return t
     }()
     
@@ -94,6 +95,7 @@ class AudioPlayerController : UIViewController {
         let r = UIButton(type: .system)
             r.tintColor = .black
             r.setImage(#imageLiteral(resourceName: "rewind15"), for: .normal)
+            r.addTarget(self, action: #selector(rewind15seconds), for: .touchUpInside)
         return r
     }()
     
@@ -109,12 +111,14 @@ class AudioPlayerController : UIViewController {
         let f = UIButton(type: .system)
             f.tintColor = .black
             f.setImage(#imageLiteral(resourceName: "fastforward15"), for: .normal)
+            f.addTarget(self, action: #selector(fastforward15Seconds), for: .touchUpInside)
         return f
     }()
 
     let volumeSlider : UISlider = {
         let v = UISlider()
-            v.maximumValue = 100
+            v.value = 1
+            v.addTarget(self, action: #selector(adjustVolume), for: .valueChanged)
         return v
     }()
     
@@ -223,8 +227,7 @@ class AudioPlayerController : UIViewController {
         maxVolumeIcon.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
-    
-    fileprivate let largerAnimation = CGAffineTransform.identity
+
     fileprivate let smallerAnimation = CGAffineTransform(scaleX: 0.7, y: 0.7)
     fileprivate func performAnimation(transform : CGAffineTransform) {
         UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5,
@@ -235,37 +238,59 @@ class AudioPlayerController : UIViewController {
     
     fileprivate func addPlayerStartPlayingObserver() {
         let times = [ NSValue(time: CMTime(value: 1, timescale: 3)) ]
-        audioPlayer.addBoundaryTimeObserver(forTimes: times, queue: .main) {
-            self.performAnimation(transform: self.largerAnimation)
+        audioPlayer.addBoundaryTimeObserver(forTimes: times, queue: .main) { [weak self] in
+            self?.performAnimation(transform: CGAffineTransform.identity)
         }
     }
     
     fileprivate func addPlayerPlayTimeObserver() {
         audioPlayer.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale:
-            2), queue: .main) { (time) in    
-                let endTime = self.audioPlayer.currentItem?.duration
+            2), queue: .main) { [weak self] (time) in
+                let endTime = self?.audioPlayer.currentItem?.duration
                 let currentSeconds = CMTimeGetSeconds(time)
                 let endTimeSeconds = CMTimeGetSeconds(endTime ??
                     CMTime(value: 1, timescale: 1))
                 let percentageTime = currentSeconds / endTimeSeconds
                 
 
-                self.timeSlider.value = Float(percentageTime)
-                self.startTimeLabel.text = time.toDisplayString()
-                self.endTimeLabel.text = endTime?.toDisplayString()
+                self?.timeSlider.value = Float(percentageTime)
+                self?.startTimeLabel.text = time.toDisplayString()
+                self?.endTimeLabel.text = endTime?.toDisplayString()
         }
+    }
+    
+    fileprivate func adjustPlayTime(value: Int64) {
+        let fifthteenSeconds = CMTime(value: value, timescale: 1)
+        let seekTime = CMTimeAdd(audioPlayer.currentTime(), fifthteenSeconds)
+        audioPlayer.seek(to: seekTime)
     }
     
     //MARK: - Button action functions
     
     @objc func dissmissAction() { dismiss(animated: true, completion: nil) }
+    
+    @objc func changeTimeSlider() {
+        let percentage = timeSlider.value
+        guard let duration = audioPlayer.currentItem?.duration else { return }
+        
+        let durationSeconds = CMTimeGetSeconds(duration)
+        let seconds = Float64(percentage) * durationSeconds
+        let seekTime = CMTimeMakeWithSeconds(seconds, 1)
+        
+        audioPlayer.seek(to: seekTime)
+    }
+
+    @objc func rewind15seconds() { adjustPlayTime(value: -15) }
+    @objc func fastforward15Seconds() { adjustPlayTime(value: 15) }
+    @objc func adjustVolume() { audioPlayer.volume = volumeSlider.value }
+    
     @objc func playPauseAction() {
 
         switch audioPlayer.timeControlStatus {
         case .paused:
             audioPlayer.play()
             playButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
-            performAnimation(transform: largerAnimation)
+            performAnimation(transform: CGAffineTransform.identity)
             break
         default:
             audioPlayer.pause()
