@@ -10,8 +10,31 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let sendRequestButton : UIButton = {
+    let sendHttpRequest : UIButton = {
         let s = UIButton(type: .system)
+            s.tag = 1
+            s.backgroundColor = .red
+            s.setTitle("Get http image", for: .normal)
+            s.setTitleColor(.white, for: .normal)
+            s.addTarget(self, action: #selector(sendDownLoadRequest), for: .touchUpInside)
+        return s
+    }()
+    
+    let sendHttpsRequest : UIButton = {
+        let s = UIButton(type: .system)
+            s.tag = 2
+            s.backgroundColor = .gray
+            s.setTitleColor(.white, for: .normal)
+            s.setTitle("Get https image", for: .normal)
+            s.addTarget(self, action: #selector(sendDownLoadRequest), for: .touchUpInside)
+        return s
+    }()
+    
+    let sendBadRequest : UIButton = {
+        let s = UIButton(type: .system)
+            s.tag = 3
+            s.backgroundColor = .blue
+            s.setTitleColor(.white, for: .normal)
             s.setTitle("Get image", for: .normal)
             s.addTarget(self, action: #selector(sendDownLoadRequest), for: .touchUpInside)
         return s
@@ -28,13 +51,18 @@ class ViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        view.addSubview(backgroudImage)
-        view.addSubview(sendRequestButton)
+        let stackView = UIStackView(arrangedSubviews: [
+            sendHttpRequest, sendHttpsRequest, sendBadRequest ] )
+            stackView.axis = .vertical
+            stackView.spacing = 10
         
-        sendRequestButton.anchors(topAnchor: nil, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor,
-                                  leftAnchor: view.leftAnchor, rightAnchor: view.rightAnchor,
-                                  topPad: 0, bottomPad: 16, leftPad: 24, rightPad: 24,
-                                  width: 0, height: 30)
+        view.addSubview(backgroudImage)
+        view.addSubview(stackView)
+
+        stackView.anchors(topAnchor: nil, bottomAnchor: view.safeAreaLayoutGuide.bottomAnchor,
+                          leftAnchor: view.leftAnchor, rightAnchor: view.rightAnchor,
+                          topPad: 0, bottomPad: 16, leftPad: 24, rightPad: 24,
+                          width: 0, height: 0)
         
         backgroudImage.anchors(topAnchor: view.safeAreaLayoutGuide.topAnchor,
                                bottomAnchor: nil,
@@ -43,14 +71,21 @@ class ViewController: UIViewController {
                                width: 0, height: 0)
     }
     
-    @objc private func sendDownLoadRequest() {
+    @objc private func sendDownLoadRequest(sender: UIButton) {
+        var imageURL: String = KittenImageLocation.error.rawValue
         
-        guard let url = URL(string: KittenImageLocation.https.rawValue) else {
+        if sender.tag == 1 { imageURL = KittenImageLocation.http.rawValue }
+        else if sender.tag == 2 { imageURL = KittenImageLocation.https.rawValue }
+
+        guard let url = URL(string: imageURL) else {
             print("There was an error generating the image URL")
+
+            DispatchQueue.main.async {
+                self.backgroudImage.image = nil
+            }
             return
         }
-        
-        
+
         let task =  URLSession.shared.dataTask(with: url) { (data, response, err) in
             guard let data = data else {
                 print("Error downloading image: ", err ?? "")
